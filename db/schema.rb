@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20161215190128) do
     t.datetime "updated_at",                             null: false
     t.integer  "ap"
     t.integer  "dp"
+    t.string   "name"
     t.string   "family_name"
     t.string   "region"
     t.string   "gear_screenshot_url"

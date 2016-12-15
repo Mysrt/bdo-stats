@@ -5,4 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   validates :name, uniqueness: { scope: [:family_name, :region] }
+  has_many :guild_memberships
+  has_many :guilds, through: :guild_memberships
 end
