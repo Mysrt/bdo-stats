@@ -9,5 +9,21 @@ class UsersController < ApplicationController
 
   end
 
+  def edit
+    @user = current_user
+  end
+
+  def update
+    params.permit!
+
+    current_user.update_attributes(params[:user])
+    respond_to do |format|
+      format.html {
+        flash[:notice] = 'Stats Updated'
+        redirect_to current_user
+      }
+    end
+  end
+
 end
 

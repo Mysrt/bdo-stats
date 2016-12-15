@@ -1,0 +1,49 @@
+= form_for(user) do |f|
+  - if user.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(user.errors.count, "error")
+        prohibited this user from being saved:
+      %ul
+        - user.errors.full_messages.each do |message|
+          %li= message
+  .actions
+    = form_for @user do |f|
+
+      .input
+        = f.label :ap
+        = f.text_field :ap
+
+      .input
+        = f.label :dp
+        = f.text_field :dp
+
+      .input
+        = f.label :bhegs,'Bhegs'
+        = f.check_box :bhegs
+
+      .input
+        = f.label :muskan, 'Muskan'
+        = f.check_box :muskan
+      
+      .input
+        = f.label :giath, 'Giath'
+        = f.check_box :giath
+      
+      .input
+        = f.label :tree, 'Tree'
+        = f.check_box :tree
+      
+      .input
+        = f.label :zaka, 'Zaka'
+        = f.check_box :zaka
+
+      .input
+        = f.label :dandy, 'Dandy'
+        = f.check_box :dandy
+
+      .input
+        = f.label :kutum, 'Kutum'
+        = f.check_box :kutum
+      
+    = f.submit
