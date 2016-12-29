@@ -1,48 +1,80 @@
-.container
+.row
+  .col-md-12
+    .page-header
+      %h1 
+        = @guild.name
+
+      = @invite_link
+#guild-stats
   .row
-    .col-md-12
-      .page-header
-        %h1 
-          = @guild.name
+    .col-md-3
+      .text-center
+        Average AP
+        %h1
+          = @guild.average_ap
 
-        = @invite_link
-  #guild-stats
-    .row
-      .col-md-4
-        .text-center
-          Average AP
-          %h1
-            = @guild.average_ap
+    .col-md-3
+      .text-center
+        Average Awakening AP
+        %h1
+          = @guild.average_awakening_ap
 
-      .col-md-4
-        .text-center
-          Average DP
-          %h1
-            = @guild.average_dp
+    .col-md-3
+      .text-center
+        Average DP
+        %h1
+          = @guild.average_dp
 
-      .col-md-4
-        .text-center
-          Average Gearscore
-          %h1
-            = @guild.average_gearscore
+    .col-md-3
+      .text-center
+        Average Gearscore
+        %h1
+          = @guild.average_gearscore
 
 
-  .row
+.row
+  .col-md-12
     %h3 Guild Members
 
     %table.table.table-hover.table-striped
       %thead
         %tr
-          %th Member Name
+          %th Name
+          %th Level
           %th AP
+          %th Awake AP
           %th DP
+          %th GS
+          %th Energy
+          %th Con
+          %th Boss Gear
 
       %tbody
         - @guild.users.each do |member|
           %tr
-            %th
-              = member.name
-            %th
+            %td
+              = "#{member.family_name}##{member.name}"
+            %td
+              = member.level
+            %td
               = member.ap
-            %th
+            %td
+              = member.awakening_ap
+            %td
               = member.dp
+            %td
+              = member.gearscore
+            %td
+              = member.energy
+            %td
+              = member.contribution
+
+            %td
+              - User::BOSS_GEAR.each do |item_name|
+                - if member.send item_name.to_sym
+                  .obtained.inline
+                    = item_name.titleize
+                - else
+                  .pleb.inline
+                    = item_name.titleize
+

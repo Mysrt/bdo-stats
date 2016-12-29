@@ -9,18 +9,37 @@
           %li= message
   .actions
     = form_for @user do |f|
+      .input
+        = f.label :family_name, "Family Name"
+        = f.text_field :family_name
 
       .input
-        = f.label :name
+        = f.label :name, "Character Name"
         = f.text_field :name
+
+      .input
+        = f.label :level
+        = f.text_field :level
 
       .input
         = f.label :ap
         = f.text_field :ap
 
       .input
+        = f.label :awakening_ap
+        = f.text_field :awakening_ap
+
+      .input
         = f.label :dp
         = f.text_field :dp
+
+      .input
+        = f.label :energy
+        = f.text_field :energy
+
+      .input
+        = f.label :contribution
+        = f.text_field :contribution
 
       - User::BOSS_GEAR.each do |item_name|
         .input

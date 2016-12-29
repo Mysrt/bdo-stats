@@ -11,14 +11,11 @@
     %nav.navbar.navbar-default
       .container-fluid
         .navbar-header
-          BDO Stats
           - if user_signed_in?
+            = link_to "BDO Stats", user_path(current_user)
             = link_to('Logout', destroy_user_session_path, :method => :delete)
           - else
+            BDO Stats
             = link_to('Login', new_user_session_path)
     .container
-      .row
-        .col-md-1
-        .col-md-10
-          = yield
-        .col-md-1
+      = yield

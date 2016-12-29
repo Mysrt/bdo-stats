@@ -13,4 +13,12 @@ class User < ApplicationRecord
   def guild
     @guild ||= guilds.first
   end
+
+  def gearscore
+    if ap.to_i > awakening_ap.to_i
+      ap.to_i + dp.to_i
+    else
+      awakening_ap.to_i + dp.to_i
+    end
+  end
 end

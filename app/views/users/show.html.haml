@@ -1,42 +1,58 @@
 .container
-  .row
-    .col-md-12
-      .page-header
-        %h1 
+  - unless @user.family_name
+    %p
+      Please finish updating your character profile to continue
+
+    = link_to 'Edit Stats', edit_user_path(@user) if @user == current_user
+  - else
+    .row
+      .col-md-12
+        .page-header
+          %h1.inline
+            = @user.family_name
           = @user.name
-        - if @user.guild
-          \#
-          .obtained
-            = @user.guild.name
+          Lv.
+          = @user.level
+         
+          = link_to 'Edit Stats', edit_user_path(@user) if @user == current_user
 
-        - else
-          You are not a member of a guild
-          = link_to 'Create a guild', new_guild_path
+          - if @user.guild
+            .obtained
+              = link_to @user.guild.name, @user.guild
+          - else
+            .pleb
+              You are not a member of a guild
+              = link_to 'Create a guild', new_guild_path
 
-      = link_to 'Edit Stats', edit_user_path(@user) if @user == current_user
 
-  .row
-    .col-md-4
-      .text-center
-        AP
-        %h1
-          = @user.ap || 0
+    .row
+      .col-md-4
+        .text-center
+          AP
+          %h1
+            = @user.ap || 0
 
-    .col-md-4
-      .text-center
-        DP
-        %h1
-          = @user.dp || 0
+      .col-md-4
+        .text-center
+          AP
+          %h1
+            = @user.awakening_ap || 0
 
-  #boss-gear.row
-    - User::BOSS_GEAR.each do |item_name|
-      .col-md-1
-        = item_name.titleize
-        - if @user.send item_name.to_sym
-          .obtained
-            Yes
-        - else
-          .pleb
-            No
+      .col-md-4
+        .text-center
+          DP
+          %h1
+            = @user.dp || 0
+
+    #boss-gear.row
+      - User::BOSS_GEAR.each do |item_name|
+        .col-md-1
+          = item_name.titleize
+          - if @user.send item_name.to_sym
+            .obtained
+              Yes
+          - else
+            .pleb
+              No
 
 
