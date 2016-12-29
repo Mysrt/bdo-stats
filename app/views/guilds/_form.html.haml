@@ -1,0 +1,17 @@
+= form_for(guild) do |f|
+  - if guild.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(guild.errors.count, "error")
+        prohibited this guild from being saved:
+      %ul
+        - guild.errors.full_messages.each do |message|
+          %li= message
+  .actions
+    = form_for @guild do |f|
+
+      .input
+        = f.label :name
+        = f.text_field :name
+        
+    = f.submit

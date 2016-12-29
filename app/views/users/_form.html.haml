@@ -11,6 +11,10 @@
     = form_for @user do |f|
 
       .input
+        = f.label :name
+        = f.text_field :name
+
+      .input
         = f.label :ap
         = f.text_field :ap
 
@@ -18,32 +22,9 @@
         = f.label :dp
         = f.text_field :dp
 
-      .input
-        = f.label :bhegs,'Bhegs'
-        = f.check_box :bhegs
-
-      .input
-        = f.label :muskan, 'Muskan'
-        = f.check_box :muskan
-      
-      .input
-        = f.label :giath, 'Giath'
-        = f.check_box :giath
-      
-      .input
-        = f.label :tree, 'Tree'
-        = f.check_box :tree
-      
-      .input
-        = f.label :zaka, 'Zaka'
-        = f.check_box :zaka
-
-      .input
-        = f.label :dandy, 'Dandy'
-        = f.check_box :dandy
-
-      .input
-        = f.label :kutum, 'Kutum'
-        = f.check_box :kutum
-      
+      - User::BOSS_GEAR.each do |item_name|
+        .input
+          = f.label item_name.to_sym, item_name.titleize
+          = f.check_box item_name.to_sym
+        
     = f.submit

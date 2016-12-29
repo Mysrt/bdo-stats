@@ -1,39 +1,42 @@
-Your Stats
+.container
+  .row
+    .col-md-12
+      .page-header
+        %h1 
+          = @user.name
+        - if @user.guild
+          \#
+          .obtained
+            = @user.guild.name
 
-.stat
-  AP
-  = @user.ap || "Not Entered"
+        - else
+          You are not a member of a guild
+          = link_to 'Create a guild', new_guild_path
 
-.stat
-  DP
-  = @user.dp || "Not Entered"
+      = link_to 'Edit Stats', edit_user_path(@user) if @user == current_user
 
-.item
-  Bhegs
-  = @user.bhegs
+  .row
+    .col-md-4
+      .text-center
+        AP
+        %h1
+          = @user.ap || 0
 
-.item
-  Muskan
-  = @user.muskan
+    .col-md-4
+      .text-center
+        DP
+        %h1
+          = @user.dp || 0
 
-.item
-  Giath
-  = @user.giath
+  #boss-gear.row
+    - User::BOSS_GEAR.each do |item_name|
+      .col-md-1
+        = item_name.titleize
+        - if @user.send item_name.to_sym
+          .obtained
+            Yes
+        - else
+          .pleb
+            No
 
-.item
-  Tree
-  = @user.tree
 
-.item
-  Zaka
-  = @user.zaka
-
-.item
-  Dandy
-  = @user.dandy
-
-.item
-  Kutum
-  = @user.kutum
-
-= link_to 'Edit Stats', edit_user_path(@user)

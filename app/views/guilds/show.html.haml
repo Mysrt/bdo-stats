@@ -1,0 +1,48 @@
+.container
+  .row
+    .col-md-12
+      .page-header
+        %h1 
+          = @guild.name
+
+        = @invite_link
+  #guild-stats
+    .row
+      .col-md-4
+        .text-center
+          Average AP
+          %h1
+            = @guild.average_ap
+
+      .col-md-4
+        .text-center
+          Average DP
+          %h1
+            = @guild.average_dp
+
+      .col-md-4
+        .text-center
+          Average Gearscore
+          %h1
+            = @guild.average_gearscore
+
+
+  .row
+    %h3 Guild Members
+
+    %table.table.table-hover.table-striped
+      %thead
+        %tr
+          %th Member Name
+          %th AP
+          %th DP
+
+      %tbody
+        - @guild.users.each do |member|
+          %tr
+            %th
+              = member.name
+            %th
+              = member.ap
+            %th
+              = member.dp

@@ -10,12 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161215190128) do
+ActiveRecord::Schema.define(version: 20161229042932) do
 
   create_table "guild_memberships", force: :cascade do |t|
     t.integer "user_id"
     t.integer "guild_id"
+    t.string  "invite_hash"
     t.index ["guild_id"], name: "index_guild_memberships_on_guild_id"
+    t.index ["invite_hash"], name: "index_guild_memberships_on_invite_hash"
     t.index ["user_id", "guild_id"], name: "index_guild_memberships_on_user_id_and_guild_id"
     t.index ["user_id"], name: "index_guild_memberships_on_user_id", unique: true
   end
@@ -53,6 +55,7 @@ ActiveRecord::Schema.define(version: 20161215190128) do
     t.boolean  "dandy"
     t.boolean  "allow_public_stat_calc",  default: true
     t.boolean  "allow_private_stat_calc", default: true
+    t.boolean  "nouver"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
