@@ -28,31 +28,31 @@
 
   .row
     .form-group
-      = f.label :contribution, class: 'col-sm-2 text-right'
+      = f.label :contribution, class: 'col-sm-2'
       .col-sm-10
         = f.text_field :contribution, class: 'form-control', placeholder: 'Total Contribution'
 
   .row
     .form-group
-      = f.label :level, class: 'col-sm-2 text-right'
+      = f.label :level, class: 'col-sm-2'
       .col-sm-10
         = f.text_field :level, class: 'form-control', placeholder: 'Level'
 
   .row
     .form-group
-      = f.label :ap, class: 'col-sm-2 text-right'
+      = f.label :ap, class: 'col-sm-2'
       .col-sm-10
         = f.text_field :ap, class: 'form-control', placeholder: 'Mainhand AP'
 
   .row
     .form-group
-      = f.label :awakening_ap, class: 'col-sm-2 text-right'
+      = f.label :awakening_ap, class: 'col-sm-2'
       .col-sm-10
         = f.text_field :awakening_ap, class: 'form-control', placeholder: 'Awakening Weapon AP'
 
   .row
     .form-group
-      = f.label :dp, class: 'col-sm-2 text-right'
+      = f.label :dp, class: 'col-sm-2'
       .col-sm-10
         = f.text_field :dp, class: 'form-control', placeholder: 'Total DP'
 
@@ -61,7 +61,7 @@
       - User::BOSS_GEAR.each do |item_name|
         .col-md-5.col-md-offset-2
           .checkbox
-            %label
+            %label.checkbox-inline
               = f.check_box item_name.to_sym
               = item_name.titleize
       

@@ -4,8 +4,10 @@
       %h1.inline
         = @guild.name
 
-      .small.inline
-        = @invite_link
+      - if @membership.admin?
+        .small.inline
+          = @invite_link
+
 #guild-stats
   .row
     .col-md-3
