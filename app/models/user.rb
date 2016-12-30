@@ -34,18 +34,18 @@ class User < ApplicationRecord
 
   #an item is green if it is above the guilds average
   def green_ap?
-    self.ap >= guild.average_ap
+    self.ap.to_i >= guild.average_ap.to_i
   end
 
   def green_awakening_ap?
-    self.awakening_ap >= guild.average_awakening_ap
+    self.awakening_ap.to_i >= guild.average_awakening_ap.to_i
   end
 
   def green_dp?
-    self.dp >= guild.average_dp
+    self.dp.to_i >= guild.average_dp.to_i
   end
 
   def green_gearscore?
-    self.gearscore >= guild.average_gearscore
+    self.gearscore.to_i >= guild.average_gearscore.to_i
   end
 end
