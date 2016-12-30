@@ -10,8 +10,8 @@
   .actions
     = form_for @guild do |f|
 
-      .input
+      .form-group
         = f.label :name
-        = f.text_field :name
+        = f.text_field :name, class: 'form-control'
         
-    = f.submit
+    = f.submit 'Create Guild', class: 'btn'

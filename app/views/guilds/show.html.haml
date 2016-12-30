@@ -4,7 +4,7 @@
       %h1.inline
         = @guild.name
 
-      - if @membership.admin?
+      - if @membership.try(:admin?)
         .small.inline
           = @invite_link
 
@@ -35,7 +35,7 @@
           = @guild.average_gearscore
 
 
-- unless @membership.admin?
+- unless @membership.try(:admin?)
 
   .well
     .row

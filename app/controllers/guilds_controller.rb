@@ -5,9 +5,14 @@ class GuildsController < ApplicationController
   end
 
   def show
-    @guild = Guild.find(params.permit(:id)[:id])
+    @guild = Guild.find_by_id(params.permit(:id)[:id])
+    unless @guild
+      flash[:error] = "Guild does not exist"
+      redirect_to current_user
+      return
+    end
     @membership = @guild.membership_for(current_user)
-    @invite_link = "#{request.base_url}/inv/#{@membership.invite_hash}"
+    @invite_link = "#{request.base_url}/inv/#{@membership.invite_hash}" if @membership
   end
 
   def create
@@ -21,7 +26,7 @@ class GuildsController < ApplicationController
 
     respond_to do |format|
       if @guild.save
-        @guild.guild_memberships.create(user: current_user)
+        @guild.guild_memberships.create!(user: current_user, admin: true)
 
         format.html {
           redirect_to @guild
