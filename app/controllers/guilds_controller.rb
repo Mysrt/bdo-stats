@@ -6,7 +6,8 @@ class GuildsController < ApplicationController
 
   def show
     @guild = Guild.find(params.permit(:id)[:id])
-    @invite_link = "#{request.base_url}/inv/#{@guild.membership_for(current_user).invite_hash}"
+    @membership = @guild.membership_for(current_user)
+    @invite_link = "#{request.base_url}/inv/#{@membership.invite_hash}"
   end
 
   def create

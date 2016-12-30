@@ -1,4 +1,4 @@
-= form_for(user) do |f|
+= form_for(user, html: {class: 'form-horizontal'}) do |f|
   - if user.errors.any?
     #error_explanation
       %h2
@@ -7,43 +7,62 @@
       %ul
         - user.errors.full_messages.each do |message|
           %li= message
-  .actions
-    = form_for @user do |f|
-      .input
-        = f.label :family_name, "Family Name"
-        = f.text_field :family_name
 
-      .input
-        = f.label :name, "Character Name"
-        = f.text_field :name
+  .row
+    .form-group
+      = f.label :family_name, "Family Name", class: 'col-sm-2 control-label'
+      .col-sm-10
+        = f.text_field :family_name, class: 'form-control', placeholder: 'Family Name'
 
-      .input
-        = f.label :level
-        = f.text_field :level
+  .row
+    .form-group
+      = f.label :name, "Character Name", class: 'col-sm-2 control-label'
+      .col-sm-10
+        = f.text_field :name, class: 'form-control', placeholder: 'Character Name'
 
-      .input
-        = f.label :ap
-        = f.text_field :ap
+  .row
+    .form-group
+      = f.label :energy, class: 'col-sm-2 control-label'
+      .col-sm-10
+        = f.text_field :energy, class: 'form-control', placeholder: 'Total Energy'
 
-      .input
-        = f.label :awakening_ap
-        = f.text_field :awakening_ap
+  .row
+    .form-group
+      = f.label :contribution, class: 'col-sm-2 text-right'
+      .col-sm-10
+        = f.text_field :contribution, class: 'form-control', placeholder: 'Total Contribution'
 
-      .input
-        = f.label :dp
-        = f.text_field :dp
+  .row
+    .form-group
+      = f.label :level, class: 'col-sm-2 text-right'
+      .col-sm-10
+        = f.text_field :level, class: 'form-control', placeholder: 'Level'
 
-      .input
-        = f.label :energy
-        = f.text_field :energy
+  .row
+    .form-group
+      = f.label :ap, class: 'col-sm-2 text-right'
+      .col-sm-10
+        = f.text_field :ap, class: 'form-control', placeholder: 'Mainhand AP'
 
-      .input
-        = f.label :contribution
-        = f.text_field :contribution
+  .row
+    .form-group
+      = f.label :awakening_ap, class: 'col-sm-2 text-right'
+      .col-sm-10
+        = f.text_field :awakening_ap, class: 'form-control', placeholder: 'Awakening Weapon AP'
 
+  .row
+    .form-group
+      = f.label :dp, class: 'col-sm-2 text-right'
+      .col-sm-10
+        = f.text_field :dp, class: 'form-control', placeholder: 'Total DP'
+
+  .row
+    .form-group
       - User::BOSS_GEAR.each do |item_name|
-        .input
-          = f.label item_name.to_sym, item_name.titleize
-          = f.check_box item_name.to_sym
-        
-    = f.submit
+        .col-md-5.col-md-offset-2
+          .checkbox
+            %label
+              = f.check_box item_name.to_sym
+              = item_name.titleize
+      
+  = f.submit 'Save Stats', class: 'btn btn-primary'

@@ -5,7 +5,7 @@ class GuildMembershipsController < ApplicationController
     @guild = @guild_membership.guild
 
     respond_to do |format|
-      if @guild.guild_memberships.create(user: current_user)
+      if @guild.guild_memberships.create(user: current_user, admin: true, invitor_id: @guild_membership.user_id)
         format.html {
           flash[:success] = "Welcome to #{@guild.name}"
           redirect_to @guild
