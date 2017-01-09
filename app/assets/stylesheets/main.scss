@@ -1,15 +1,17 @@
+@import "bootstrap";
+
+$background-color: #2c2b41;
+$text-color: #d9d9d9;
+$dark-bg: darken($background-color, 10%);
+
 body {
-  background-color: #2c2b41;
-  color: #FFF;
+  color: $text-color;
+  background-color: $background-color; 
 }
-.navbar {
-  background-color: #0F0F12;
-  padding: 10px;
-  margin-bottom: 20px;
-}
+
 thead {
   border-top-style: none;
-  background-color: #0F0F12;
+  background-color: darken( $background-color, 30%);
 }
 
 .text-center{
@@ -43,7 +45,7 @@ thead {
 
 #main-link{
   font-size: 24px;
-  color: #FFF;
+  color: $text-color;
 }
 
 .pull-left {
@@ -56,3 +58,52 @@ thead {
 .text-right {
   text-align: right;
 }
+
+ul li.active a {
+  color: $text-color !important;
+}
+
+ul.nav-tabs li a{
+  color: $text-color;
+}
+
+ul li a:hover {
+  color: $dark-bg;
+}
+
+.no-border {
+  border-bottom: none !important;
+}
+
+.darken {
+  color: darken($text-color, 30%);
+}
+
+.gearscore {
+  margin-top: 10px;
+}
+
+
+//navbar
+
+.navbar {
+  padding: 10px;
+  margin-bottom: 20px;
+}
+.navbar-custom {
+  background-color: $dark-bg;
+  color:#ffffff;
+  border-radius:0;
+}
+
+.navbar-custom .navbar-nav > li > a {
+  color:#fff;
+}
+.navbar-custom .navbar-nav > .active > a, .navbar-nav > .active > a:hover, .navbar-nav > .active > a:focus {
+  color: #ffffff;
+  background-color:transparent;
+}
+.navbar-custom .navbar-brand {
+  color:#eeeeee;
+}
+

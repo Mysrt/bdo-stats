@@ -11,6 +11,7 @@ class GuildsController < ApplicationController
       redirect_to current_user
       return
     end
+    @members = @guild.guild_memberships.where(approved: true)
     @membership = @guild.membership_for(current_user)
     @invite_link = "#{request.base_url}/inv/#{@membership.invite_hash}" if @membership
   end

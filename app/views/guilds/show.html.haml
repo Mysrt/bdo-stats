@@ -1,37 +1,40 @@
 .row
   .col-md-12
-    .page-header
+    .page-header.no-border
       %h1.inline
         = @guild.name
 
-      - if @membership.try(:admin?)
-        .small.inline
+        %small.inline.hide
           = @invite_link
 
 #guild-stats
   .row
     .col-md-3
       .text-center
-        Average AP
-        %h1
+        .darken
+          Average AP
+        %h1.gearscore
           = @guild.average_ap
 
     .col-md-3
       .text-center
-        Average Awakening AP
-        %h1
+        .darken
+          Average Awakening AP
+        %h1.gearscore
           = @guild.average_awakening_ap
 
     .col-md-3
       .text-center
-        Average DP
-        %h1
+        .darken
+          Average DP
+        %h1.gearscore
           = @guild.average_dp
 
     .col-md-3
       .text-center
-        Average Gearscore
-        %h1
+        .darken
+          Average Gearscore
+        %h1.gearscore
           = @guild.average_gearscore
 
 .row
@@ -49,59 +52,61 @@
           %a{ "href" => "#invites", "id" => "invites-tab", "role" => "tab", "data-toggle" =>  "tab", "aria-controls" => "invites", "aria-expanded" => "true" }
             Pending Invites
  
-        .tab-content
-          #home.tab-pane.active
+      .tab-content
+        #home.tab-pane{"role" => "tabpanel"}
+          %p
             home
-          #invites.tab-pane
+        #invites.tab-pane{"role" => "tabpanel"}
+          %p
             invites
-          #members.tab-pane
-            - unless @membership.try(:admin?)
-              .well
-                .row
-                  .col-md-2
-                  .col-md-8
-                    .center
-                      You are not an officer of the guild an cannot view all the guild members stats
+        #members.tab-pane{"role" => "tabpanel"}
+          - unless @membership.try(:admin?)
+            .well
+              .row
+                .col-md-2
+                .col-md-8
+                  .center
+                    You are not an officer of the guild an cannot view all the guild members stats
 
-            %table.table.table-hover.table-striped
-              %thead
+          %table.table.table-hover.table-striped
+            %thead
+              %tr
+                %th Name
+                %th Level
+                %th AP
+                %th Awake AP
+                %th DP
+                %th GS
+                %th Energy
+                %th Con
+                %th Boss Gear
+
+            %tbody
+              - @guild.users.each do |member|
                 %tr
-                  %th Name
-                  %th Level
-                  %th AP
-                  %th Awake AP
-                  %th DP
-                  %th GS
-                  %th Energy
-                  %th Con
-                  %th Boss Gear
+                  %td
+                    = "#{member.family_name}##{member.name}"
+                  %td
+                    = member.level
+                  %td{:class => "#{member.green_ap? ? "text-success" : "text-danger"}" }
+                    = member.ap
+                  %td{:class => "#{member.green_awakening_ap? ? "text-success" : "text-danger"}" }
+                    = member.awakening_ap
+                  %td{:class => "#{member.green_dp? ? "text-success" : "text-danger"}" }
+                    = member.dp
+                  %td{:class => "#{member.green_gearscore? ? "text-success" : "text-danger"}" }
+                    = member.gearscore
+                  %td
+                    = member.energy
+                  %td
+                    = member.contribution
 
-              %tbody
-                - @guild.users.each do |member|
-                  %tr
-                    %td
-                      = "#{member.family_name}##{member.name}"
-                    %td
-                      = member.level
-                    %td{:class => "#{member.green_ap? ? "text-success" : "text-danger"}" }
-                      = member.ap
-                    %td{:class => "#{member.green_awakening_ap? ? "text-success" : "text-danger"}" }
-                      = member.awakening_ap
-                    %td{:class => "#{member.green_dp? ? "text-success" : "text-danger"}" }
-                      = member.dp
-                    %td{:class => "#{member.green_gearscore? ? "text-success" : "text-danger"}" }
-                      = member.gearscore
-                    %td
-                      = member.energy
-                    %td
-                      = member.contribution
-
-                    %td
-                      - User::BOSS_GEAR.each do |item_name|
-                        - if member.send item_name.to_sym
-                          .text-success.inline
-                            = item_name.titleize
-                        - else
-                          .text-danger.inline
-                            = item_name.titleize
+                  %td
+                    - User::BOSS_GEAR.each do |item_name|
+                      - if member.send item_name.to_sym
+                        .text-success.inline
+                          = item_name.titleize
+                      - else
+                        .text-danger.inline
+                          = item_name.titleize
 
