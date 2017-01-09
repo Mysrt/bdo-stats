@@ -30,7 +30,6 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'devise'
-gem 'bootstrap', '~> 4.0.0.alpha3'
 
 gem 'haml'
 

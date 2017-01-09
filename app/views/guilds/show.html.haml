@@ -34,60 +34,74 @@
         %h1
           = @guild.average_gearscore
 
+.row
+  .col-md-12
+    #tab-list
+      %ul.nav.nav-tabs
 
-- unless @membership.try(:admin?)
+        %li{"role" => "presentation"}
+          %a{ "href" => "#home", "id" => "home-tab", "role" => "tab", "data-toggle" =>  "tab", "aria-controls" => "home", "aria-expanded" => "true" }
+            Home
+        %li{"role" => "presentation"}
+          %a{ "href" => "#members", "id" => "home-tab", "role" => "tab", "data-toggle" =>  "tab", "aria-controls" => "members", "aria-expanded" => "true" }
+            Guild Members
+        %li{"role" => "presentation"}
+          %a{ "href" => "#invites", "id" => "invites-tab", "role" => "tab", "data-toggle" =>  "tab", "aria-controls" => "invites", "aria-expanded" => "true" }
+            Pending Invites
+ 
+        .tab-content
+          #home.tab-pane.active
+            home
+          #invites.tab-pane
+            invites
+          #members.tab-pane
+            - unless @membership.try(:admin?)
+              .well
+                .row
+                  .col-md-2
+                  .col-md-8
+                    .center
+                      You are not an officer of the guild an cannot view all the guild members stats
 
-  .well
-    .row
-      .col-md-2
-      .col-md-8
-        .center
-          You are not an officer of the guild an cannot view all the guild members stats
+            %table.table.table-hover.table-striped
+              %thead
+                %tr
+                  %th Name
+                  %th Level
+                  %th AP
+                  %th Awake AP
+                  %th DP
+                  %th GS
+                  %th Energy
+                  %th Con
+                  %th Boss Gear
 
-- else
-  .row
-    .col-md-12
-      %h5 Guild Members
+              %tbody
+                - @guild.users.each do |member|
+                  %tr
+                    %td
+                      = "#{member.family_name}##{member.name}"
+                    %td
+                      = member.level
+                    %td{:class => "#{member.green_ap? ? "text-success" : "text-danger"}" }
+                      = member.ap
+                    %td{:class => "#{member.green_awakening_ap? ? "text-success" : "text-danger"}" }
+                      = member.awakening_ap
+                    %td{:class => "#{member.green_dp? ? "text-success" : "text-danger"}" }
+                      = member.dp
+                    %td{:class => "#{member.green_gearscore? ? "text-success" : "text-danger"}" }
+                      = member.gearscore
+                    %td
+                      = member.energy
+                    %td
+                      = member.contribution
 
-      %table.table.table-hover.table-striped
-        %thead
-          %tr
-            %th Name
-            %th Level
-            %th AP
-            %th Awake AP
-            %th DP
-            %th GS
-            %th Energy
-            %th Con
-            %th Boss Gear
-
-        %tbody
-          - @guild.users.each do |member|
-            %tr
-              %td
-                = "#{member.family_name}##{member.name}"
-              %td
-                = member.level
-              %td{:class => "#{member.green_ap? ? "text-success" : "text-danger"}" }
-                = member.ap
-              %td{:class => "#{member.green_awakening_ap? ? "text-success" : "text-danger"}" }
-                = member.awakening_ap
-              %td{:class => "#{member.green_dp? ? "text-success" : "text-danger"}" }
-                = member.dp
-              %td{:class => "#{member.green_gearscore? ? "text-success" : "text-danger"}" }
-                = member.gearscore
-              %td
-                = member.energy
-              %td
-                = member.contribution
-
-              %td
-                - User::BOSS_GEAR.each do |item_name|
-                  - if member.send item_name.to_sym
-                    .text-success.inline
-                      = item_name.titleize
-                  - else
-                    .text-danger.inline
-                      = item_name.titleize
+                    %td
+                      - User::BOSS_GEAR.each do |item_name|
+                        - if member.send item_name.to_sym
+                          .text-success.inline
+                            = item_name.titleize
+                        - else
+                          .text-danger.inline
+                            = item_name.titleize
 
