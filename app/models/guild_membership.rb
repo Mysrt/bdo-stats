@@ -2,6 +2,7 @@ class GuildMembership < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :guild
+  belongs_to :invitor, class_name: "User", foreign_key: 'invitor_id'
 
   validates :user_id, uniqueness: true
   validates :invite_hash, uniqueness: true

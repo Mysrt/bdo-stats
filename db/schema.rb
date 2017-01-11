@@ -10,29 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170109224818) do
+ActiveRecord::Schema.define(version: 20170111202638) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "guild_memberships", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "guild_id"
-    t.string  "invite_hash"
-    t.integer "invitor_id"
-    t.boolean "admin"
-    t.boolean "accepted"
+    t.integer  "user_id"
+    t.integer  "guild_id"
+    t.string   "invite_hash"
+    t.integer  "invitor_id"
+    t.boolean  "admin"
+    t.boolean  "accepted",    default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["accepted"], name: "index_guild_memberships_on_accepted", using: :btree
+    t.index ["created_at"], name: "index_guild_memberships_on_created_at", using: :btree
     t.index ["guild_id"], name: "index_guild_memberships_on_guild_id", using: :btree
     t.index ["invite_hash"], name: "index_guild_memberships_on_invite_hash", using: :btree
     t.index ["invitor_id"], name: "index_guild_memberships_on_invitor_id", using: :btree
+    t.index ["updated_at"], name: "index_guild_memberships_on_updated_at", using: :btree
     t.index ["user_id", "guild_id"], name: "index_guild_memberships_on_user_id_and_guild_id", using: :btree
     t.index ["user_id"], name: "index_guild_memberships_on_user_id", unique: true, using: :btree
   end
 
   create_table "guilds", force: :cascade do |t|
-    t.string "name"
-    t.string "region"
+    t.string   "name"
+    t.string   "region"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["created_at"], name: "index_guilds_on_created_at", using: :btree
+    t.index ["updated_at"], name: "index_guilds_on_updated_at", using: :btree
   end
 
   create_table "t_tvprices", id: false, force: :cascade do |t|

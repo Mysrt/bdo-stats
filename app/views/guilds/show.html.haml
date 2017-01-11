@@ -4,7 +4,7 @@
       %h1.inline
         = @guild.name
 
-        %small.inline.hide
+        %small.inline
           = @invite_link
 
 #guild-stats
@@ -41,72 +41,84 @@
   .col-md-12
     #tab-list
       %ul.nav.nav-tabs
-
-        %li{"role" => "presentation"}
-          %a{ "href" => "#home", "id" => "home-tab", "role" => "tab", "data-toggle" =>  "tab", "aria-controls" => "home", "aria-expanded" => "true" }
-            Home
-        %li{"role" => "presentation"}
+        %li.active{"role" => "presentation"}
           %a{ "href" => "#members", "id" => "home-tab", "role" => "tab", "data-toggle" =>  "tab", "aria-controls" => "members", "aria-expanded" => "true" }
             Guild Members
-        %li{"role" => "presentation"}
-          %a{ "href" => "#invites", "id" => "invites-tab", "role" => "tab", "data-toggle" =>  "tab", "aria-controls" => "invites", "aria-expanded" => "true" }
-            Pending Invites
+        - if @membership.try(:admin?)
+          %li{"role" => "presentation"}
+            %a{ "href" => "#invites", "id" => "invites-tab", "role" => "tab", "data-toggle" =>  "tab", "aria-controls" => "invites", "aria-expanded" => "true" }
+              Pending Invites
  
       .tab-content
-        #home.tab-pane{"role" => "tabpanel"}
-          %p
-            home
-        #invites.tab-pane{"role" => "tabpanel"}
-          %p
-            invites
+        - if @membership.try(:admin?)
+          #invites.tab-pane{"role" => "tabpanel"}
+            %table.table.table-borderless.table-striped
+              %thead
+                %th Character Name
+                %th Invited by
+                %th 
+              %tbody
+                - @unaccepted_members.each do |member|
+                  %tr
+                    %td.col-md-5
+                      = "#{member.user.family_name}##{member.user.name}"
+                    %td.col-md-5
+                      = member.invitor.try(:name)
+                    %td.col-md-1
+                      = form_for member, url: {controller: 'guild_memberships', action: 'accept_invite'} do |f|
+                        = f.hidden_field :accepted, value: true
+
+                        = f.submit "Accept", class: 'btn btn-success'
+
+
+            
         #members.tab-pane{"role" => "tabpanel"}
           - unless @membership.try(:admin?)
-            .well
-              .row
-                .col-md-2
-                .col-md-8
-                  .center
-                    You are not an officer of the guild an cannot view all the guild members stats
+            .row
+              .col-md-2
+              .col-md-8
+                .center
+                  You are not an officer of the guild an cannot view the guild members stats
 
-          %table.table.table-hover.table-striped
-            %thead
-              %tr
+          - else
+            %table.table.table-borderless.table-striped
+              %thead
                 %th Name
                 %th Level
                 %th AP
-                %th Awake AP
+                %th Awk AP
                 %th DP
                 %th GS
                 %th Energy
                 %th Con
                 %th Boss Gear
 
-            %tbody
-              - @guild.users.each do |member|
-                %tr
-                  %td
-                    = "#{member.family_name}##{member.name}"
-                  %td
-                    = member.level
-                  %td{:class => "#{member.green_ap? ? "text-success" : "text-danger"}" }
-                    = member.ap
-                  %td{:class => "#{member.green_awakening_ap? ? "text-success" : "text-danger"}" }
-                    = member.awakening_ap
-                  %td{:class => "#{member.green_dp? ? "text-success" : "text-danger"}" }
-                    = member.dp
-                  %td{:class => "#{member.green_gearscore? ? "text-success" : "text-danger"}" }
-                    = member.gearscore
-                  %td
-                    = member.energy
-                  %td
-                    = member.contribution
+              %tbody
+                - @members.each do |member|
+                  %tr
+                    %td
+                      = "#{member.family_name}##{member.name}"
+                    %td
+                      = member.level
+                    %td{:class => "#{member.green_ap? ? "text-success" : "text-danger"}" }
+                      = member.ap
+                    %td{:class => "#{member.green_awakening_ap? ? "text-success" : "text-danger"}" }
+                      = member.awakening_ap
+                    %td{:class => "#{member.green_dp? ? "text-success" : "text-danger"}" }
+                      = member.dp
+                    %td{:class => "#{member.green_gearscore? ? "text-success" : "text-danger"}" }
+                      = member.gearscore
+                    %td
+                      = member.energy
+                    %td
+                      = member.contribution
 
-                  %td
-                    - User::BOSS_GEAR.each do |item_name|
-                      - if member.send item_name.to_sym
-                        .text-success.inline
-                          = item_name.titleize
-                      - else
-                        .text-danger.inline
-                          = item_name.titleize
+                    %td
+                      - User::BOSS_GEAR.each do |item_name|
+                        - if member.send item_name.to_sym
+                          .text-success.inline
+                            = item_name.titleize
+                        - else
+                          .text-danger.inline
+                            = item_name.titleize
 

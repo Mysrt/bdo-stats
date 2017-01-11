@@ -4,7 +4,7 @@ class GuildMembershipsController < ApplicationController
     @guild_membership = GuildMembership.find_by_invite_hash(params.permit(:invite_hash)[:invite_hash])
 
     @guild = @guild_membership.guild
-    @new_membership = @guild.guild_memberships.create!(user: current_user, admin: true, invitor_id: @guild_membership.user_id)
+    @new_membership = @guild.guild_memberships.create!(user: current_user, invitor_id: @guild_membership.user_id)
 
     respond_to do |format|
       if @new_membership

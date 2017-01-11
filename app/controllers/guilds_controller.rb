@@ -11,7 +11,8 @@ class GuildsController < ApplicationController
       redirect_to current_user
       return
     end
-    @members = @guild.guild_memberships.where(approved: true)
+    @members = @guild.users.where(guild_memberships: {accepted: true})
+    @unaccepted_members = @guild.guild_memberships(accepted: false).order("created_at DESC")
     @membership = @guild.membership_for(current_user)
     @invite_link = "#{request.base_url}/inv/#{@membership.invite_hash}" if @membership
   end
@@ -27,7 +28,7 @@ class GuildsController < ApplicationController
 
     respond_to do |format|
       if @guild.save
-        @guild.guild_memberships.create!(user: current_user, admin: true)
+        @guild.guild_memberships.create!(user: current_user, admin: true, accepted: true)
 
         format.html {
           redirect_to @guild
