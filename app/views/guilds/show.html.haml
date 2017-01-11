@@ -50,29 +50,7 @@
               Pending Invites
  
       .tab-content
-        - if @membership.try(:admin?)
-          #invites.tab-pane{"role" => "tabpanel"}
-            %table.table.table-borderless.table-striped
-              %thead
-                %th Character Name
-                %th Invited by
-                %th 
-              %tbody
-                - @unaccepted_members.each do |member|
-                  %tr
-                    %td.col-md-5
-                      = "#{member.user.family_name}##{member.user.name}"
-                    %td.col-md-5
-                      = member.invitor.try(:name)
-                    %td.col-md-1
-                      = form_for member, url: {controller: 'guild_memberships', action: 'accept_invite'} do |f|
-                        = f.hidden_field :accepted, value: true
-
-                        = f.submit "Accept", class: 'btn btn-success'
-
-
-            
-        #members.tab-pane{"role" => "tabpanel"}
+        #members.active.tab-pane{"role" => "tabpanel"}
           - unless @membership.try(:admin?)
             .row
               .col-md-2
@@ -122,3 +100,12 @@
                           .text-danger.inline
                             = item_name.titleize
 
+        - if @membership.try(:admin?)
+          #invites.tab-pane{"role" => "tabpanel"}
+            - @unaccepted_members.each do |member|
+              = form_tag "guild_memberships/accept_invite/#{member.id}" do |f|
+                .form-group
+                  = "#{member.user.family_name}##{member.user.name}"
+                .form-group
+                  = member.invitor.try(:name)
+                = submit_tag "Accept", class: 'btn btn-success'
