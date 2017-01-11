@@ -10,6 +10,8 @@ class GuildMembership < ActiveRecord::Base
 
   before_create :generate_invite_hash
 
+  scope :accepted, -> { where(guild_memberships: {accepted: true}) }
+
   def generate_invite_hash
     self.invite_hash = SecureRandom.hex(4).upcase
   end

@@ -5,19 +5,19 @@ class Guild < ActiveRecord::Base
   validates :name, uniqueness: { scope: [:region] }
 
   def average_ap
-    self.users.average("ap").to_i
+    self.users.accepted.average("ap").to_i
   end
 
   def average_awakening_ap
-    self.users.average("awakening_ap").to_i
+    self.users.accepted.average("awakening_ap").to_i
   end
   
   def average_dp
-    self.users.average("dp").to_i
+    self.users.accepted.average("dp").to_i
   end
 
   def average_gearscore
-    self.users.average("GREATEST(ap, awakening_ap) + dp").to_i
+    self.users.accepted.average("GREATEST(ap, awakening_ap) + dp").to_i
   end
 
   def membership_for(user)

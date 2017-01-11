@@ -8,34 +8,37 @@
           = @invite_link
 
 #guild-stats
-  .row
-    .col-md-3
-      .text-center
-        .darken
-          Average AP
-        %h1.gearscore
-          = @guild.average_ap
+  - unless @membership.accepted?
+    Your invite has not yet been accepted by the guild leader and you cannot see the guild stats
+  - else
+    .row
+      .col-md-3
+        .text-center
+          .darken
+            Average AP
+          %h1.gearscore
+            = @guild.average_ap
 
-    .col-md-3
-      .text-center
-        .darken
-          Average Awakening AP
-        %h1.gearscore
-          = @guild.average_awakening_ap
+      .col-md-3
+        .text-center
+          .darken
+            Average Awakening AP
+          %h1.gearscore
+            = @guild.average_awakening_ap
 
-    .col-md-3
-      .text-center
-        .darken
-          Average DP
-        %h1.gearscore
-          = @guild.average_dp
+      .col-md-3
+        .text-center
+          .darken
+            Average DP
+          %h1.gearscore
+            = @guild.average_dp
 
-    .col-md-3
-      .text-center
-        .darken
-          Average Gearscore
-        %h1.gearscore
-          = @guild.average_gearscore
+      .col-md-3
+        .text-center
+          .darken
+            Average Gearscore
+          %h1.gearscore
+            = @guild.average_gearscore
 
 .row
   .col-md-12
@@ -49,7 +52,7 @@
             %a{ "href" => "#invites", "id" => "invites-tab", "role" => "tab", "data-toggle" =>  "tab", "aria-controls" => "invites", "aria-expanded" => "true" }
               Pending Invites
               - if @unaccepted_members.any?
-                .badge.badge-pill.badge-danger
+                %span.badge.badge-pill.badge-danger
                   = @unaccepted_members.count
 
     .tab-content
@@ -111,14 +114,20 @@
               %thead
                 %th Character Name
                 %th Invited by
+                %th Ap
+                %th Awk Ap
                 %th 
               %tbody
                 - @unaccepted_members.each do |member|
                   %tr
-                    %td.col-md-5
+                    %td.col-md-3
                       = "#{member.user.family_name}##{member.user.name}"
-                    %td.col-md-5
+                    %td.col-md-3
                       = member.invitor.try(:name)
+                    %td.col-md-2
+                      = member.user.ap
+                    %td.col-md-2
+                      = member.invitor.awakening_ap
                     %td.col-md-1
                       = form_for member, url: {controller: 'guild_memberships', action: 'accept_invite', id: member.id} do |f|
                         = f.hidden_field :accepted, value: true

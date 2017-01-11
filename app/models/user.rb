@@ -11,6 +11,8 @@ class User < ApplicationRecord
 
   BOSS_GEAR = ["bhegs", "muskan", "giath", "tree", "zaka", "dandy", "kutum", "nouver"]
 
+  scope :accepted, -> { where(guild_memberships: {accepted: true}) }
+
   def guild
     @guild ||= guilds.first
   end
