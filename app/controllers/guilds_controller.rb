@@ -28,7 +28,7 @@ class GuildsController < ApplicationController
 
     respond_to do |format|
       if @guild.save
-        @guild.guild_memberships.create!(user: current_user, admin: true, accepted: true)
+        @guild.guild_memberships.create!(user: current_user, admin: true, accepted: true, invitor: current_user)
 
         format.html {
           redirect_to @guild
