@@ -12,7 +12,7 @@ class GuildsController < ApplicationController
       return
     end
     @members = @guild.users.where(guild_memberships: {accepted: true})
-    @unaccepted_members = @guild.guild_memberships(accepted: false).order("created_at DESC")
+    @unaccepted_members = @guild.guild_memberships.where(accepted: false).order("created_at DESC")
     @membership = @guild.membership_for(current_user)
     @invite_link = "#{request.base_url}/inv/#{@membership.invite_hash}" if @membership
   end

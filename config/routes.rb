@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :guilds
   resources :guild_memberships do
     member do
-      get :accept_invite
+      patch :accept_invite
     end
   end
 

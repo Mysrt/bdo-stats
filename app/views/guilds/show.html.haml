@@ -48,64 +48,81 @@
           %li{"role" => "presentation"}
             %a{ "href" => "#invites", "id" => "invites-tab", "role" => "tab", "data-toggle" =>  "tab", "aria-controls" => "invites", "aria-expanded" => "true" }
               Pending Invites
- 
-      .tab-content
-        #members.active.tab-pane{"role" => "tabpanel"}
-          - unless @membership.try(:admin?)
-            .row
-              .col-md-2
-              .col-md-8
-                .center
-                  You are not an officer of the guild an cannot view the guild members stats
+              - if @unaccepted_members.any?
+                .badge.badge-pill.badge-danger
+                  = @unaccepted_members.count
 
+    .tab-content
+      #members.active.tab-pane{"role" => "tabpanel"}
+        - unless @membership.try(:admin?)
+          .row
+            .col-md-2
+            .col-md-8
+              .center
+                You are not an officer of the guild an cannot view the guild members stats
+
+        - else
+          %table.table.table-borderless.table-striped
+            %thead
+              %th Name
+              %th Level
+              %th AP
+              %th Awk AP
+              %th DP
+              %th GS
+              %th Energy
+              %th Con
+              %th Boss Gear
+
+            %tbody
+              - @members.each do |member|
+                %tr
+                  %td
+                    = "#{member.family_name}##{member.name}"
+                  %td
+                    = member.level
+                  %td{:class => "#{member.green_ap? ? "text-success" : "text-danger"}" }
+                    = member.ap
+                  %td{:class => "#{member.green_awakening_ap? ? "text-success" : "text-danger"}" }
+                    = member.awakening_ap
+                  %td{:class => "#{member.green_dp? ? "text-success" : "text-danger"}" }
+                    = member.dp
+                  %td{:class => "#{member.green_gearscore? ? "text-success" : "text-danger"}" }
+                    = member.gearscore
+                  %td
+                    = member.energy
+                  %td
+                    = member.contribution
+
+                  %td
+                    - User::BOSS_GEAR.each do |item_name|
+                      - if member.send item_name.to_sym
+                        .text-success.inline
+                          = item_name.titleize
+                      - else
+                        .text-danger.inline
+                          = item_name.titleize
+      - if @membership.try(:admin?)
+        #invites.tab-pane{"role" => "tabpanel"}
+          - if @unaccepted_members.empty?
+            No Pending invites
           - else
             %table.table.table-borderless.table-striped
               %thead
-                %th Name
-                %th Level
-                %th AP
-                %th Awk AP
-                %th DP
-                %th GS
-                %th Energy
-                %th Con
-                %th Boss Gear
-
+                %th Character Name
+                %th Invited by
+                %th 
               %tbody
-                - @members.each do |member|
+                - @unaccepted_members.each do |member|
                   %tr
-                    %td
-                      = "#{member.family_name}##{member.name}"
-                    %td
-                      = member.level
-                    %td{:class => "#{member.green_ap? ? "text-success" : "text-danger"}" }
-                      = member.ap
-                    %td{:class => "#{member.green_awakening_ap? ? "text-success" : "text-danger"}" }
-                      = member.awakening_ap
-                    %td{:class => "#{member.green_dp? ? "text-success" : "text-danger"}" }
-                      = member.dp
-                    %td{:class => "#{member.green_gearscore? ? "text-success" : "text-danger"}" }
-                      = member.gearscore
-                    %td
-                      = member.energy
-                    %td
-                      = member.contribution
+                    %td.col-md-5
+                      = "#{member.user.family_name}##{member.user.name}"
+                    %td.col-md-5
+                      = member.invitor.try(:name)
+                    %td.col-md-1
+                      = form_for member, url: {controller: 'guild_memberships', action: 'accept_invite', id: member.id} do |f|
+                        = f.hidden_field :accepted, value: true
 
-                    %td
-                      - User::BOSS_GEAR.each do |item_name|
-                        - if member.send item_name.to_sym
-                          .text-success.inline
-                            = item_name.titleize
-                        - else
-                          .text-danger.inline
-                            = item_name.titleize
+                        = f.submit "Accept", class: 'btn btn-success'
 
-        - if @membership.try(:admin?)
-          #invites.tab-pane{"role" => "tabpanel"}
-            - @unaccepted_members.each do |member|
-              = form_tag "guild_memberships/accept_invite/#{member.id}" do |f|
-                .form-group
-                  = "#{member.user.family_name}##{member.user.name}"
-                .form-group
-                  = member.invitor.try(:name)
-                = submit_tag "Accept", class: 'btn btn-success'
+
