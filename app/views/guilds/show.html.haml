@@ -105,6 +105,7 @@
                       - else
                         .text-danger.inline
                           = item_name.titleize
+
       - if @membership.try(:admin?)
         #invites.tab-pane{"role" => "tabpanel"}
           - if @unaccepted_members.empty?
@@ -133,5 +134,4 @@
                         = f.hidden_field :accepted, value: true
 
                         = f.submit "Accept", class: 'btn btn-success'
-
 

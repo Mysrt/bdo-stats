@@ -12,16 +12,14 @@
       .container-fluid
         .navbar-header
           - if user_signed_in?
-            .pull-left
-              = link_to "BDO Stats", user_path(current_user), id: 'main-link'
-            .pull-right
-              %small
-                = link_to('Logout', destroy_user_session_path, :method => :delete)
+            = link_to "BDO Stats", user_path(current_user), id: 'main-link'
           - else
-            .pull-left
-              BDO Stats
-            .pull-right
-              %small
-                = link_to('Login', new_user_session_path)
+            BDO Stats
+        .pull-right
+          %small
+            - if user_signed_in?
+              = link_to('Logout', destroy_user_session_path, :method => :delete)
+            - else
+              = link_to('Login', new_user_session_path)
     .container
       = yield

@@ -50,4 +50,13 @@ class User < ApplicationRecord
   def green_gearscore?
     self.gearscore.to_i >= guild.average_gearscore.to_i
   end
+  
+  def percentile_calculations
+    User.where(id: self.id).select("
+      users.*, 
+      ntile(100) OVER(ORDER BY ap) AS ap_percentile, 
+      ntile(100) OVER(ORDER BY awakening_ap) AS awakening_ap_percentile,
+      rank() OVER(ORDER BY awakening_ap) AS player_rank
+    ").first
+  end
 end

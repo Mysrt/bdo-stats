@@ -12,48 +12,76 @@
             = @user.family_name
           %small
             = @user.name
+            %small.inline
+              - if @user.guild
+                .obtained
+                  = link_to @user.guild.name, @user.guild
+              - else
+                .pleb
+                  You are not a member of a guild
+                  = link_to 'Create a guild', new_guild_path
             Lv.
             = @user.level
          
-          = link_to 'Edit Stats', edit_user_path(@user) if @user == current_user
+            = link_to 'Edit Stats', edit_user_path(@user), class: 'fa fa-pencil' if @user == current_user
 
-          - if @user.guild
-            .obtained
-              = link_to @user.guild.name, @user.guild
-          - else
-            .pleb
-              You are not a member of a guild
-              = link_to 'Create a guild', new_guild_path
 
+            .row
+              .col-md-1
+                .text-center
+                  .darken
+                    AP
+                  %h3.gearscore
+                    = @user.ap || 0
+
+              .col-md-1
+                .text-center
+                  .darken
+                    Awk AP
+                  %h3.gearscore
+                    = @user.awakening_ap || 0
+
+              .col-md-1
+                .text-center
+                  .darken
+                    DP
+                  %h3.gearscore
+                    = @user.dp || 0
+
+
+              .col-md-6
+                - User::BOSS_GEAR.each do |item_name|
+                  .col-md-1
+                    = item_name.titleize
+                    - if @user.send item_name.to_sym
+                      %h5.gearscore.obtained
+                        Yes
+                    - else
+                      %h5.gearscore.pleb
+                        No
 
     .row
       .col-md-4
         .text-center
-          AP
+          Player Ranking
           %h1
-            = @user.ap || 0
+            = @user.percentile_calculations["player_rank"]
 
       .col-md-4
         .text-center
-          AP
+          AP Percentile
           %h1
-            = @user.awakening_ap || 0
+            Top
+            = @user.percentile_calculations["ap_percentile"]
+            \%
 
       .col-md-4
         .text-center
-          DP
+          Awakened AP Percentile
           %h1
-            = @user.dp || 0
+            Top
+            = @user.percentile_calculations["awakening_ap_percentile"]
+            \%
 
-    #boss-gear.row
-      - User::BOSS_GEAR.each do |item_name|
-        .col-md-1
-          = item_name.titleize
-          - if @user.send item_name.to_sym
-            .obtained
-              Yes
-          - else
-            .pleb
-              No
 
 
