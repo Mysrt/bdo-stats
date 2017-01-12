@@ -4,5 +4,5 @@ $(document).ready(function(){
     $(this).tab('show')
   })
   $('.image-popout').magnificPopup({type:'image'});
-  
+
 });
