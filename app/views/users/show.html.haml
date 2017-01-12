@@ -9,13 +9,13 @@
       .col-md-12
         .page-header
           .row
-            .col-md-1
+            .col-md-2
               - if @user.avatar_content_type
                 = image_tag @user.avatar.url(:thumb), class: 'img-circle'
               - else
                 = image_tag 'missing-user-image.png', class: 'img-circle'
 
-            .col-md-11
+            #user-card.col-md-10
               %h1.inline
                 = @user.family_name
               %small
