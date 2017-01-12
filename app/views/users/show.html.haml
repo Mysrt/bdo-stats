@@ -10,7 +10,11 @@
         .page-header
           .row
             .col-md-1
-              = image_tag @user.avatar.url(:thumb), class: 'img-circle'
+              - if @user.avatar_content_type
+                = image_tag @user.avatar.url(:thumb), class: 'img-circle'
+              - else
+                = image_tag 'missing-user-image', class: 'img-circle'
+
             .col-md-11
               %h1.inline
                 = @user.family_name
@@ -87,7 +91,8 @@
             = @user.percentile_calculations["awakening_ap_percentile"]
             \%
 
-    .row.gear-screenshot
-      .col-md-6.col-md-offset-3
-        = image_tag @user.gear_screenshot(:large)
+    - if @user.gear_screenshot_content_type
+      .row.gear-screenshot
+        .col-md-6.col-md-offset-3
+          = image_tag @user.gear_screenshot(:large)
 
