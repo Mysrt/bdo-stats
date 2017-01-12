@@ -8,57 +8,59 @@
     .row
       .col-md-12
         .page-header
-          %h1.inline
-            = @user.family_name
-          %small
-            = @user.name
-            %small.inline
-              - if @user.guild
-                .obtained
-                  = link_to @user.guild.name, @user.guild
-              - else
-                .pleb
-                  You are not a member of a guild
-                  = link_to 'Create a guild', new_guild_path
-            Lv.
-            = @user.level
-         
-            = link_to 'Edit Stats', edit_user_path(@user), class: 'fa fa-pencil' if @user == current_user
+          .media
+            = image_tag @user.avatar.url(:medium), class: 'd-flex mr-3'
+            %h1.inline
+              = @user.family_name
+            %small
+              = @user.name
+              %small.inline
+                - if @user.guild
+                  .obtained
+                    = link_to @user.guild.name, @user.guild
+                - else
+                  .pleb
+                    You are not a member of a guild
+                    = link_to 'Create a guild', new_guild_path
+              Lv.
+              = @user.level
+           
+              = link_to 'Edit Stats', edit_user_path(@user), class: 'fa fa-pencil' if @user == current_user
 
 
-            .row
-              .col-md-1
-                .text-center
-                  .darken
-                    AP
-                  %h3.gearscore
-                    = @user.ap || 0
+              .row
+                .col-md-1
+                  .text-center
+                    .darken
+                      AP
+                    %h3.gearscore
+                      = @user.ap || 0
 
-              .col-md-1
-                .text-center
-                  .darken
-                    Awk AP
-                  %h3.gearscore
-                    = @user.awakening_ap || 0
+                .col-md-1
+                  .text-center
+                    .darken
+                      Awk AP
+                    %h3.gearscore
+                      = @user.awakening_ap || 0
 
-              .col-md-1
-                .text-center
-                  .darken
-                    DP
-                  %h3.gearscore
-                    = @user.dp || 0
+                .col-md-1
+                  .text-center
+                    .darken
+                      DP
+                    %h3.gearscore
+                      = @user.dp || 0
 
 
-              .col-md-6
-                - User::BOSS_GEAR.each do |item_name|
-                  .col-md-1
-                    = item_name.titleize
-                    - if @user.send item_name.to_sym
-                      %h5.gearscore.obtained
-                        Yes
-                    - else
-                      %h5.gearscore.pleb
-                        No
+                .col-md-6
+                  - User::BOSS_GEAR.each do |item_name|
+                    .col-md-1
+                      = item_name.titleize
+                      - if @user.send item_name.to_sym
+                        %h5.gearscore.obtained
+                          Yes
+                      - else
+                        %h5.gearscore.pleb
+                          No
 
     .row
       .col-md-4

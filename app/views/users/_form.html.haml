@@ -61,9 +61,20 @@
 
     = f.label :gear_screenshot, class: 'btn btn-primary' do
       = f.file_field :gear_screenshot, class: 'hide', onchange: "$('#upload-file-info').html($(this).val());"
-      Upload Image
+      Upload Gear Screenshot
 
     %span#upload-file-info.label.label-info
+
+  .form-group
+    = f.label :avatar, class: 'col-sm-2 control-label'
+
+    = f.label :avatar, class: 'btn btn-primary' do
+      = f.file_field :avatar, class: 'hide', onchange: "$('#upload-avatar-file-info').html($(this).val());"
+      Upload Avatar
+
+    %span#upload-avatar-file-info.label.label-info
+
+
 
   .row
     .form-group

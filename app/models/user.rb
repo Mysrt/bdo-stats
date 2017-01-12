@@ -11,8 +11,11 @@ class User < ApplicationRecord
 
   BOSS_GEAR = ["bhegs", "muskan", "giath", "tree", "zaka", "dandy", "kutum", "nouver"]
 
-  has_attached_file :gear_screenshot, :styles => { :medium => "300x300#", :thumb => "200x200#" }
+  has_attached_file :gear_screenshot, :styles => {:large => "600x600#", :medium => "300x300#", :thumb => "200x200#" }
   validates_attachment :gear_screenshot, content_type: { content_type:     ["image/jpg", "image/jpeg", "image/png"] }
+
+  has_attached_file :avatar, :styles => { :medium => "300x300#", :thumb => "200x200#" }
+  validates_attachment :avatar, content_type: { content_type:     ["image/jpg", "image/jpeg", "image/png"] }
 
   scope :accepted, -> { where(guild_memberships: {accepted: true}) }
 
