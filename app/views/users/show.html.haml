@@ -13,7 +13,7 @@
               - if @user.avatar_content_type
                 = image_tag @user.avatar.url(:thumb), class: 'img-circle'
               - else
-                = image_tag 'missing-user-image', class: 'img-circle'
+                = image_tag (image_url 'missing-user-image'), class: 'img-circle'
 
             .col-md-11
               %h1.inline
