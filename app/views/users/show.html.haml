@@ -67,27 +67,30 @@
                           No
 
     .row
-      .col-md-4
-        .text-center
-          Player Ranking
-          %h1
-            = @user.percentile_calculations.player_rank
+      - if current_user.complete?
+        .col-md-4
+          .text-center
+            Player Ranking
+            %h1
+              = @user.percentile_calculations.player_rank
 
-      .col-md-4
-        .text-center
-          AP Percentile
-          %h1
-            Top
-            = @user.percentile_calculations.ap_percentile
-            \%
+        .col-md-4
+          .text-center
+            AP Percentile
+            %h1
+              Top
+              = @user.percentile_calculations.ap_percentile
+              \%
 
-      .col-md-4
-        .text-center
-          Awakened AP Percentile
-          %h1
-            Top
-            = @user.percentile_calculations.awakening_ap_percentile
-            \%
+        .col-md-4
+          .text-center
+            Awakened AP Percentile
+            %h1
+              Top
+              = @user.percentile_calculations.awakening_ap_percentile
+              \%
+      - else
+        Finish your profile to see your ranking information
 
     - if @user.gear_screenshot_content_type
       .row.gear-screenshot

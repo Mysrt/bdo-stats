@@ -56,6 +56,11 @@ class User < ApplicationRecord
   def green_gearscore?
     self.gearscore.to_i >= guild.average_gearscore.to_i
   end
+
+  def complete?
+
+    self.ap.present? && self.awakening_ap.present?
+  end
   
   def percentile_calculations
     count = User.where("users.awakening_ap IS NOT NULL AND users.ap IS NOT NULL").count
@@ -73,6 +78,6 @@ SELECT
 ) AS rankings
 WHERE rankings.id = #{self.id}
 SQL
-    User.find_by_sql(sql).first
+    User.find_by_sql(sql).first 
   end
 end
