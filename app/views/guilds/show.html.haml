@@ -81,7 +81,10 @@
               - @members.each do |member|
                 %tr
                   %td
-                    = "#{member.family_name}##{member.name}"
+                    - if member.gear_screenshot_content_type.present?
+                      = link_to "#{member.family_name}##{member.name}", member.gear_screenshot.url(:original), class: 'image-popout'
+                    - else
+                      = "#{member.family_name}##{member.name}"
                   %td
                     = member.level
                   %td{:class => "#{member.green_ap? ? "text-success" : "text-danger"}" }

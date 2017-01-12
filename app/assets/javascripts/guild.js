@@ -3,4 +3,6 @@ $(document).ready(function(){
     e.preventDefault()
     $(this).tab('show')
   })
+  $('.image-popout').magnificPopup({type:'image'});
+  
 });
