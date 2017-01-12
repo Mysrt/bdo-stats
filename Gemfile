@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
+gem 'dotenv-rails', :groups => [:development, :test]
 gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
@@ -28,13 +29,13 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-gem 'dotenv-rails', :groups => [:development, :test]
 
 gem 'devise'
 gem 'haml'
 gem 'font-awesome-rails'
 gem 'paperclip'
-gem 'aws-sdk'
+gem 'aws-sdk', '< 2.0'
+
 
 
 group :development, :test do
