@@ -58,11 +58,21 @@ class User < ApplicationRecord
   end
   
   def percentile_calculations
-    User.where(id: self.id).select("
-      users.*, 
-      ntile(100) OVER(ORDER BY ap) AS ap_percentile, 
-      ntile(100) OVER(ORDER BY awakening_ap) AS awakening_ap_percentile,
-      rank() OVER(ORDER BY awakening_ap) AS player_rank
-    ").first
+    count = User.where("users.awakening_ap IS NOT NULL AND users.ap IS NOT NULL").count
+    percentile_count = (count < 100) ? count : 100
+    sql = <<-SQL 
+    SELECT * FROM (
+SELECT
+  users.id,
+  ntile(#{percentile_count}) OVER(ORDER BY users.ap DESC) AS ap_percentile,
+  ntile(#{percentile_count}) OVER(ORDER BY users.awakening_ap DESC) AS awakening_ap_percentile,
+  rank() OVER(ORDER BY users.awakening_ap DESC) AS player_rank
+  FROM USERS
+  WHERE users.awakening_ap IS NOT NULL
+  AND users.ap IS NOT NULL
+) AS rankings
+WHERE rankings.id = #{self.id}
+SQL
+    User.find_by_sql(sql).first
   end
 end

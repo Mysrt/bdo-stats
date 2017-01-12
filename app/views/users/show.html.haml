@@ -71,14 +71,14 @@
         .text-center
           Player Ranking
           %h1
-            = @user.percentile_calculations["player_rank"]
+            = @user.percentile_calculations.player_rank
 
       .col-md-4
         .text-center
           AP Percentile
           %h1
             Top
-            = @user.percentile_calculations["ap_percentile"]
+            = @user.percentile_calculations.ap_percentile
             \%
 
       .col-md-4
@@ -86,7 +86,7 @@
           Awakened AP Percentile
           %h1
             Top
-            = @user.percentile_calculations["awakening_ap_percentile"]
+            = @user.percentile_calculations.awakening_ap_percentile
             \%
 
     - if @user.gear_screenshot_content_type
