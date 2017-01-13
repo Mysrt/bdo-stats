@@ -1,0 +1,56 @@
+- unless @membership.try(:admin?)
+  .row
+    .col-md-2
+    .col-md-8
+      .center
+        You are not an officer of the guild an cannot view the guild members stats
+
+- else
+  %table.table.table-borderless.table-striped
+    %thead
+      %th Name
+      %th Level
+      %th AP
+      %th Awk AP
+      %th DP
+      %th GS
+      %th Energy
+      %th Con
+      %th Boss Gear
+      %th Actions
+
+    %tbody
+      - @memberships.each do |membership|
+        - member = membership.user
+        %tr
+          %td
+            - if member.gear_screenshot_content_type.present?
+              = link_to "#{member.family_name}##{member.name}", member.gear_screenshot.url(:original), class: 'image-popout'
+            - else
+              = "#{member.family_name}##{member.name}"
+          %td
+            = member.level
+          %td{:class => "#{member.green_ap? ? "text-success" : "text-danger"}" }
+            = member.ap
+          %td{:class => "#{member.green_awakening_ap? ? "text-success" : "text-danger"}" }
+            = member.awakening_ap
+          %td{:class => "#{member.green_dp? ? "text-success" : "text-danger"}" }
+            = member.dp
+          %td{:class => "#{member.green_gearscore? ? "text-success" : "text-danger"}" }
+            = member.gearscore
+          %td
+            = member.energy
+          %td
+            = member.contribution
+
+          %td
+            = render partial: 'boss_gear',  locals: {member: member}
+
+          - if @membership.admin? || @membership.officer?
+            %td
+              - unless membership.officer? || membership.admin?
+                = button_to 'Promote', {controller: 'guild_memberships', action: 'update', promote: true, id: membership.id}, class: 'btn btn-primary btn-sm', method: 'patch', data: {confirm: "Are you sure you want to promote #{member.name}"}
+              - unless member.id == current_user.id
+                = button_to 'Kick', {controller: 'guild_memberships', action: 'update', kick: true, id: membership.id}, class: 'btn btn-danger btn-sm', method: 'patch', data: {confirm: "Are you sure you want to kick #{member.name}"}
+
+

@@ -5,6 +5,7 @@ $text-color: #d9d9d9;
 $dark-bg: darken($background-color, 10%);
 $thead: darken($background-color, 5%);
 $not-as-dark-bg: darken($background-color, 3%);
+$boss-border: #f6c232;
 
 body {
   color: $text-color;
@@ -32,6 +33,12 @@ thead th{
   background-color: $thead !important;
 }
 
+.boss-gear {
+  border: solid 2px $boss-border;
+  border-radius: 10px;
+
+}
+
 .gear-screenshot{
   margin-top: 50px;
 }
@@ -51,10 +58,12 @@ thead th{
 
 .obtained {
   color: #6C6;
+  background-color: darken(#6C6, 30%);
 }
 
 .pleb {
   color: #C66;
+  background-color: darken(#C66, 30%);
 }
 
 #guild-stats {

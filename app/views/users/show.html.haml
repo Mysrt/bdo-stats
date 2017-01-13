@@ -56,15 +56,8 @@
 
 
                 .col-md-8
-                  - User::BOSS_GEAR.each do |item_name|
-                    .col-md-1
-                      = item_name.titleize
-                      - if @user.send item_name.to_sym
-                        %h5.gearscore.obtained
-                          Yes
-                      - else
-                        %h5.gearscore.pleb
-                          No
+                  = render partial: 'guilds/boss_gear', locals: {member: @user}
+
 
     .row
       - if current_user.complete?

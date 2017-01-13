@@ -22,4 +22,7 @@
             - else
               = link_to('Login', new_user_session_path)
     .container
+      - flash.each do |key, value|
+        = content_tag :div, value, class: "flash #{key}"
+
       = yield

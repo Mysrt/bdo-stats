@@ -1,0 +1,28 @@
+- if @unaccepted_members.empty?
+  No Pending invites
+- else
+  %table.table.table-borderless.table-striped
+    %thead
+      %th Character Name
+      %th Invited by
+      %th Ap
+      %th Awk Ap
+      %th 
+    %tbody
+      - @unaccepted_members.each do |member|
+        %tr
+          %td.col-md-3
+            = "#{member.user.family_name}##{member.user.name}"
+          %td.col-md-3
+            = member.invitor.try(:name)
+          %td.col-md-2
+            = member.user.ap
+          %td.col-md-2
+            = member.invitor.try(:awakening_ap)
+          %td.col-md-1
+            = form_for member, url: {controller: 'guild_memberships', action: 'accept_invite', id: member.id} do |f|
+              = f.hidden_field :accepted, value: true
+
+              = f.submit "Accept", class: 'btn btn-success'
+
+

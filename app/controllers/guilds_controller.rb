@@ -11,6 +11,8 @@ class GuildsController < ApplicationController
       redirect_to current_user
       return
     end
+
+    @memberships = @guild.guild_memberships.where(guild_memberships: {accepted: true}).preload(:user)
     @members = @guild.users.where(guild_memberships: {accepted: true})
     @unaccepted_members = @guild.guild_memberships.where(accepted: false).order("created_at DESC")
     @membership = @guild.membership_for(current_user)
