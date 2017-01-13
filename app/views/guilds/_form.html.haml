@@ -1,4 +1,4 @@
-= form_for(guild) do |f|
+= form_for(guild, html: {class: 'form-horizontal'}) do |f|
   - if guild.errors.any?
     #error_explanation
       %h2
@@ -10,8 +10,17 @@
   .actions
     = form_for @guild do |f|
 
-      .form-group
-        = f.label :name
-        = f.text_field :name, class: 'form-control'
+      .row
+        .form-group
+          = f.label :name, class: 'col-sm-2 control-label'
+          .col-sm-10
+            = f.text_field :name, class: 'form-control'
+
+      .row
+        .form-group
+          = f.label :hide_from_members, class: 'col-sm-2 control-label'
+          .checkbox
+            %label.checkbox-inline
+              = f.check_box :hide_from_members
         
-    = f.submit 'Create Guild', class: 'btn'
+    = f.submit 'Submit', class: 'btn'

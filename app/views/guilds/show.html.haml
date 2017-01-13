@@ -2,9 +2,12 @@
   .col-md-12
     .page-header.no-border
       %h1.inline
+        - if @guild.hide_from_members?
+          = fa_icon("user-secret")
         = @guild.name
 
         %small.inline
+          =link_to "Edit", edit_guild_path(@guild), class: 'fa fa-pencil'
           %button{type: 'button', class: 'btn btn-small', "data-toggle" => 'modal', "data-target" => '#invite-link-modal'}
             Invite Link
 
@@ -48,7 +51,7 @@
         %li.active{"role" => "presentation"}
           %a{ "href" => "#members", "id" => "home-tab", "role" => "tab", "data-toggle" =>  "tab", "aria-controls" => "members", "aria-expanded" => "true" }
             Guild Members
-        - if @membership.try(:admin?)
+        - if @membership.try(:royalty?)
           %li{"role" => "presentation"}
             %a{ "href" => "#invites", "id" => "invites-tab", "role" => "tab", "data-toggle" =>  "tab", "aria-controls" => "invites", "aria-expanded" => "true" }
               Pending Invites

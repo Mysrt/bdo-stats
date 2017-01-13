@@ -14,4 +14,8 @@ class GuildMembership < ActiveRecord::Base
     self.invite_hash = SecureRandom.hex(4).upcase
   end
 
+
+  def royalty?
+    officer? || admin?
+  end
 end

@@ -37,7 +37,13 @@ thead th{
 .boss-gear {
   border: solid 2px $boss-border;
   border-radius: 10px;
+  height: 38px;
+  width: 38px;
+  background-color: #333
+}
 
+.button_to {
+  display: inline-block;
 }
 
 .login-links {
@@ -73,16 +79,9 @@ table td a:hover {
   color: #000;
 }
 
-.obtained {
-  color: #6C6;
-  
-  background-color: darken(#8FBC8F, 20%);
-}
-
 .pleb {
-  
-  color: #72243C;
-  background-color: darken(#72243C, 2%);
+  opacity: 0.4;
+  border: solid 2px gray;
 }
 
 #guild-stats {

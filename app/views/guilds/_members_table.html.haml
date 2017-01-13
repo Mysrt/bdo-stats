@@ -1,4 +1,4 @@
-- unless @membership.try(:admin?)
+- if !@membership.try(:royalty?) && @membership.try(:hide_from_members?)
   .row
     .col-md-2
     .col-md-8
@@ -18,7 +18,8 @@
       %th Energy
       %th Con
       %th Boss Gear
-      %th Actions
+      - if @membership.royalty?
+        %th Actions
 
     %tbody
       - @memberships.each do |membership|
@@ -54,11 +55,11 @@
           %td
             = render partial: 'boss_gear',  locals: {member: member}
 
-          - if @membership.admin? || @membership.officer?
+          - if @membership.royalty?
             %td
               - unless membership.officer? || membership.admin?
-                = button_to 'Promote', {controller: 'guild_memberships', action: 'update', promote: true, id: membership.id}, class: 'btn btn-primary btn-sm', method: 'patch', data: {confirm: "Are you sure you want to promote #{member.name}"}
+                = button_to 'P', {controller: 'guild_memberships', action: 'update', promote: true, id: membership.id}, class: 'inline btn btn-primary btn-sm', method: 'patch', data: {confirm: "Are you sure you want to promote #{member.name}.  This will allow him to kick and promote other members, as well as see all other members stats"}
               - unless member.id == current_user.id
-                = button_to 'Kick', {controller: 'guild_memberships', action: 'update', kick: true, id: membership.id}, class: 'btn btn-danger btn-sm', method: 'patch', data: {confirm: "Are you sure you want to kick #{member.name}"}
+                = button_to 'K', {controller: 'guild_memberships', action: 'update', kick: true, id: membership.id}, class: 'inline btn btn-danger btn-sm', method: 'patch', data: {confirm: "Are you sure you want to kick #{member.name}"}
 
 

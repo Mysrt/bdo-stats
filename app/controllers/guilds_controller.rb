@@ -4,6 +4,45 @@ class GuildsController < ApplicationController
     @guild = Guild.new
   end
 
+  def edit
+    @guild = Guild.find(params[:id])
+    @membership = @guild.membership_for(current_user)
+
+    unless @membership.royalty?
+      flash[:danger] = "You must be an officer of the guild to edit it"
+      redirect_to root_path
+      return
+    end
+
+  end
+
+  def update
+    @permitted_params = params.require(:guild).permit(:name, :hide_from_members)
+
+    @guild = Guild.find(params[:id])
+    @membership = @guild.membership_for(current_user)
+
+    unless @membership.royalty?
+      flash[:danger] = "You must be an officer of the guild to edit it"
+      redirect_to root_path
+      return
+    end
+
+    respond_to do |format|
+      if @guild.update_attributes!(@permitted_params)
+        format.html {
+          flash[:success] = "Successfully updated guild"
+          redirect_to @guild
+          return
+        }
+      else
+          flash[:danger] = "There was an error saving the guild, #{@guild.errors.full_messages.join(', ')}"
+          redirect_to @guild
+          return
+      end
+    end
+  end
+
   def show
     @guild = Guild.find_by_id(params.permit(:id)[:id])
     unless @guild

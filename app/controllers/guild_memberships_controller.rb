@@ -35,7 +35,7 @@ class GuildMembershipsController < ApplicationController
     @guild = @guild_membership.guild
 
     @current_user_membership = @guild.membership_for(current_user)
-    unless @current_user_membership.try(:admin?) || @current_user_membership.try(:officer)
+    unless @current_user_membership.try(:royalty?)
       flash[:error] = "You don't have permission to do this action"
       redirect_to root_path
       return
@@ -62,7 +62,7 @@ class GuildMembershipsController < ApplicationController
     @guild_membership = GuildMembership.find(params[:id])
     @guild = @guild_membership.guild
 
-    unless @guild.membership_for(current_user).try(:admin?)
+    unless @guild.membership_for(current_user).try(:royalty?)
       flash[:danger] = "You are not an admin of this guild and cannot accept users"
       redirect_to root_url
       return
