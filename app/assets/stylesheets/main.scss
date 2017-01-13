@@ -6,6 +6,7 @@ $dark-bg: darken($background-color, 10%);
 $thead: darken($background-color, 5%);
 $not-as-dark-bg: darken($background-color, 3%);
 $boss-border: #f6c232;
+$link-color: lighten($text-color, 10%);
 
 body {
   color: $text-color;
@@ -37,6 +38,22 @@ thead th{
   border: solid 2px $boss-border;
   border-radius: 10px;
 
+}
+
+.login-links {
+  color: lighten($text-color, 10%);
+}
+
+table td a:hover {
+  color: darken($text-color, 30%);
+}
+
+.btn {
+  color: #000;
+}
+
+.btn-primary, .btn-success, .btn-danger{
+  color: $text-color;
 }
 
 .gear-screenshot{

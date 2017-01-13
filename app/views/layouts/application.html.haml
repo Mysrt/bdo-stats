@@ -18,9 +18,9 @@
         .pull-right
           %small
             - if user_signed_in?
-              = link_to('Logout', destroy_user_session_path, :method => :delete)
+              = link_to 'Logout', destroy_user_session_path, :method => :delete, class: 'login-links'
             - else
-              = link_to('Login', new_user_session_path)
+              = link_to 'Login', new_user_session_path, class: 'login-links'
     .container
       .row
         .col-md-6.col-md-offset-3
