@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112024421) do
+ActiveRecord::Schema.define(version: 20170113043506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20170112024421) do
     t.boolean  "accepted",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "officer"
     t.index ["accepted"], name: "index_guild_memberships_on_accepted", using: :btree
     t.index ["created_at"], name: "index_guild_memberships_on_created_at", using: :btree
     t.index ["guild_id"], name: "index_guild_memberships_on_guild_id", using: :btree
