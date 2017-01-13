@@ -7,7 +7,7 @@ class GuildsController < ApplicationController
   def show
     @guild = Guild.find_by_id(params.permit(:id)[:id])
     unless @guild
-      flash[:error] = "Guild does not exist"
+      flash[:danger] = "Guild does not exist"
       redirect_to current_user
       return
     end
@@ -21,7 +21,7 @@ class GuildsController < ApplicationController
 
   def create
     if current_user.guild
-      flash[:error] = "You must leave your guild before you can make a new one"
+      flash[:danger] = "You must leave your guild before you can make a new one"
       redirect_to current_user
       return
     end

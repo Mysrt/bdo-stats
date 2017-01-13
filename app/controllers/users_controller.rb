@@ -18,7 +18,7 @@ class UsersController < ApplicationController
     current_user.update_attributes(params[:user])
     respond_to do |format|
       format.html {
-        flash[:notice] = 'Stats Updated'
+        flash[:success] = 'Stats Updated'
         redirect_to current_user
       }
     end

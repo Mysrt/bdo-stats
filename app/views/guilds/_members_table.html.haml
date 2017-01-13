@@ -8,6 +8,7 @@
 - else
   %table.table.table-borderless.table-striped
     %thead
+      %th Rank
       %th Name
       %th Level
       %th AP
@@ -23,6 +24,13 @@
       - @memberships.each do |membership|
         - member = membership.user
         %tr
+          %td
+            - if membership.admin?
+              L
+            - elsif membership.officer?
+              O
+            - else
+              M
           %td
             - if member.gear_screenshot_content_type.present?
               = link_to "#{member.family_name}##{member.name}", member.gear_screenshot.url(:original), class: 'image-popout'

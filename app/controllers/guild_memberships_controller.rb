@@ -4,7 +4,7 @@ class GuildMembershipsController < ApplicationController
     @guild_membership = GuildMembership.find_by_invite_hash(params.permit(:invite_hash)[:invite_hash])
 
     unless @guild_membership
-      flash[:error] = "Invite does not exist"
+      flash[:danger] = "Invite does not exist"
       redirect_to root_path
       return
     end
@@ -23,7 +23,7 @@ class GuildMembershipsController < ApplicationController
 
       else 
         format.html {
-          flash[:error] = "You cannot join this guild"
+          flash[:danger] = "You cannot join this guild"
           redirect_to @guild || current_user
         }
       end
@@ -63,7 +63,7 @@ class GuildMembershipsController < ApplicationController
     @guild = @guild_membership.guild
 
     unless @guild.membership_for(current_user).try(:admin?)
-      flash[:error] = "You are not an admin of this guild and cannot accept users"
+      flash[:danger] = "You are not an admin of this guild and cannot accept users"
       redirect_to root_url
       return
     end

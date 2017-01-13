@@ -22,7 +22,15 @@
             - else
               = link_to('Login', new_user_session_path)
     .container
-      - flash.each do |key, value|
-        = content_tag :div, value, class: "flash #{key}"
+      .row
+        .col-md-6.col-md-offset-3
+        - flash.each do |key, value|
+          .div{ class: "alert flash alert-#{key} bg-#{key}"}
+            %button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+              %span(aria-hidden="true")
+                &times;
+
+
+            = value
 
       = yield
