@@ -18,7 +18,7 @@
           %td.col-md-2
             = member.user.ap
           %td.col-md-2
-            = member.invitor.try(:awakening_ap)
+            = member.user.try(:awakening_ap)
           %td.col-md-1
             = form_for member, url: {controller: 'guild_memberships', action: 'accept_invite', id: member.id} do |f|
               = f.hidden_field :accepted, value: true
