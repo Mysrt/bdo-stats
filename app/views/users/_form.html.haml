@@ -22,24 +22,6 @@
 
   .row
     .form-group
-      = f.label :energy, class: 'col-sm-2 control-label'
-      .col-sm-10
-        = f.text_field :energy, class: 'form-control', placeholder: 'Total Energy'
-
-  .row
-    .form-group
-      = f.label :contribution, class: 'col-sm-2 control-label'
-      .col-sm-10
-        = f.text_field :contribution, class: 'form-control', placeholder: 'Total Contribution'
-
-  .row
-    .form-group
-      = f.label :level, class: 'col-sm-2 control-label'
-      .col-sm-10
-        = f.text_field :level, class: 'form-control', placeholder: 'Level'
-
-  .row
-    .form-group
       = f.label :ap, class: 'col-sm-2 control-label'
       .col-sm-10
         = f.text_field :ap, class: 'form-control', placeholder: 'Mainhand AP'
@@ -55,6 +37,24 @@
       = f.label :dp, class: 'col-sm-2 control-label'
       .col-sm-10
         = f.text_field :dp, class: 'form-control', placeholder: 'Total DP'
+
+  .row
+    .form-group
+      = f.label :energy, class: 'col-sm-2 control-label'
+      .col-sm-10
+        = f.text_field :energy, class: 'form-control', placeholder: 'Total Energy'
+
+  .row
+    .form-group
+      = f.label :contribution, class: 'col-sm-2 control-label'
+      .col-sm-10
+        = f.text_field :contribution, class: 'form-control', placeholder: 'Total Contribution'
+
+  .row
+    .form-group
+      = f.label :level, class: 'col-sm-2 control-label'
+      .col-sm-10
+        = f.text_field :level, class: 'form-control', placeholder: 'Level'
 
   .form-group
     = f.label :gear_screenshot, class: 'col-sm-2 control-label'
