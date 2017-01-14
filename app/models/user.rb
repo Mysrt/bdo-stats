@@ -58,8 +58,7 @@ class User < ApplicationRecord
   end
 
   def complete?
-
-    self.ap.present? && self.awakening_ap.present?
+    self.name.present? && self.family_name.present && self.ap.present? && self.awakening_ap.present?
   end
   
   def percentile_calculations
