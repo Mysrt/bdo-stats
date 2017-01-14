@@ -1,5 +1,5 @@
 - User::BOSS_GEAR.each do |item_name|
   .text-success.inline{:class => "#{item_name.underscore}"}
-    = image_url(item_name, class: "boss-gear rounded #{member.send(item_name.to_sym) ? 'obtained' : 'pleb'}")
+    = image_tag("#{item_name}.png", class: "boss-gear rounded #{member.send(item_name.to_sym) ? 'obtained' : 'pleb'}")
 
 
