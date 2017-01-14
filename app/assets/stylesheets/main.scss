@@ -54,7 +54,11 @@ table td a {
   color: $link-color;
 }
 
-table td a:hover {
+a, small a {
+  color: $link-color;
+}
+
+a:hover, small a:hover, table td a:hover {
   color: darken($text-color, 30%);
 }
 
