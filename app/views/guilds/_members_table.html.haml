@@ -1,9 +1,12 @@
-- if !@membership.try(:royalty?) && @membership.try(:hide_from_members?)
+- if (!@membership.try(:royalty?) && @membership.try(:hide_from_members?)) || !@membership.accepted?
   .row
     .col-md-2
     .col-md-8
       .center
-        You are not an officer of the guild an cannot view the guild members stats
+        - if !@membership.accepted?
+          You have not been accepted into the guild and cannot view the guild members stats
+        - else
+          You are not an officer of the guild an cannot view the guild members stats
 
 - else
   %table.table.table-borderless.table-striped
