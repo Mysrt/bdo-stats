@@ -7,7 +7,8 @@
         = @guild.name
 
         %small.inline
-          =link_to "Edit", edit_guild_path(@guild), class: 'fa fa-pencil'
+          - if @membership.try(:royalty?)
+            = link_to "Edit", edit_guild_path(@guild), class: 'fa fa-pencil'
           %button{type: 'button', class: 'btn btn-small', "data-toggle" => 'modal', "data-target" => '#invite-link-modal'}
             Invite Link
 
