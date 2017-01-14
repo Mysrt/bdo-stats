@@ -65,7 +65,7 @@ class GuildsController < ApplicationController
       return
     end
 
-    @guild = Guild.new(params.require(:guild).permit(:name))
+    @guild = Guild.new(params.require(:guild).permit(:name, :hide_from_members))
 
     respond_to do |format|
       if @guild.save
