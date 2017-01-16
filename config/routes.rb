@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/', to: 'home#index'
 
   get 'inv/*invite_hash', to: 'guild_memberships#create'
 

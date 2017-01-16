@@ -6,7 +6,7 @@ $dark-bg: darken($background-color, 10%);
 $thead: darken($background-color, 5%);
 $not-as-dark-bg: darken($background-color, 3%);
 $boss-border: #f6c232;
-$link-color: lighten($text-color, 10%);
+$link-color: lighten($text-color, 50%);
 
 body {
   color: $text-color;
@@ -32,6 +32,26 @@ tr.found{
 
 thead th{
   background-color: $thead !important;
+}
+
+#main-background {
+  background-image: url(<%= asset_path 'bdostats_background.png' %>);
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-size: 100%;
+  height: 690px;
+  background-repeat: no-repeat;
+}
+
+#bdo-header{
+  z-index: 10;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Droid Sans, Ubuntu, Cantarell, Fira Sans, Helvetica, Arial, sans-serif;
+  font-size: 90px;
+  align: center;
+
 }
 
 .boss-gear {
