@@ -79,4 +79,50 @@ WHERE rankings.id = #{self.id}
 SQL
     User.find_by_sql(sql).first 
   end
+
+  def self.calculate_top_dp
+    sql = <<-SQL 
+    SELECT * FROM (
+SELECT
+  users.*,
+  rank() OVER(ORDER BY users.dp DESC) AS player_rank
+  FROM USERS
+  WHERE users.dp IS NOT NULL
+) AS rankings
+WHERE player_rank = 1
+SQL
+    rank = User.find_by_sql(sql).first 
+    User.find(rank["id"])
+  end
+
+  def self.calculate_top_awk_ap
+    sql = <<-SQL 
+    SELECT * FROM (
+SELECT
+  users.*,
+  rank() OVER(ORDER BY users.awakening_ap DESC) AS player_rank
+  FROM USERS
+  WHERE users.awakening_ap IS NOT NULL
+) AS rankings
+WHERE player_rank = 1
+SQL
+    rank = User.find_by_sql(sql).first 
+    User.find(rank["id"])
+  end
+
+  def self.calculate_top_ap
+    sql = <<-SQL 
+    SELECT * FROM (
+SELECT
+  users.*,
+  rank() OVER(ORDER BY users.ap DESC) AS player_rank
+  FROM USERS
+  WHERE users.ap IS NOT NULL
+) AS rankings
+WHERE player_rank = 1
+SQL
+    rank = User.find_by_sql(sql).first 
+    User.find(rank["id"])
+ 
+  end
 end

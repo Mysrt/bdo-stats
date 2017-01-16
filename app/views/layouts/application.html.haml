@@ -6,13 +6,15 @@
     %title BdoStats
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_link_tag    'application', 'https://fonts.googleapis.com/css?family=Francois+One'
+    
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
     %nav.navbar.navbar-custom
       .container-fluid
         .navbar-header
           - if user_signed_in?
-            = link_to "BDO Stats", user_path(current_user), id: 'main-link'
+            = link_to "BDO STATS", user_path(current_user), id: 'main-link'
           - else
             BDO Stats
         .pull-right
@@ -32,3 +34,6 @@
             = value
 
       = yield
+    %footer.footer
+      .container.navbar-custom
+        %h5 BDO STATS

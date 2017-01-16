@@ -1,4 +1,71 @@
-.row
+#background-spacer.row
   #main-background
   .col-md-12.text-center
-    %h1#bdo-header BDO STATS
+    %h1.bdo-header 
+      BDO STATS
+    .bdo-header#header-help-text
+      Guild stat tracking tool for Black Desert Online
+
+.row
+  .col-sm-6
+    .card
+      .card-block
+        .text-center
+          = fa_icon "users", class: 'card-fa'
+        %h3.card-title.text-center Track Guild Progression
+        %p.card-text See and track what gains you and your guildies have gotten in real time.  When your guildies enter their data and upload a screenshot of their gear you and your GM will be able to view each others gear easily.
+  .col-sm-6
+    .card
+      .card-block
+        .text-center
+          = fa_icon "bar-chart", class: 'card-fa'
+        %h3.card-title.text-center Track Your Progression
+        %p.card-text Enter your stats and you will be able to see where your gear ranks among the entire playerbase.  Everything from AP to contribution can be tracked.
+
+
+%hr
+
+.row#trophy-list
+  .col-sm-4
+    .card
+      .card-block
+        .text-center
+          = fa_icon "trophy", class: 'card-fa'
+        %h3.card-title.text-center Top AP
+        %p.card-text
+          Congratulations to
+          = @top_ap.name
+          for having the most AP in the game with
+          %b
+            = @top_ap.ap
+          AP
+  
+
+  .col-sm-4
+    .card
+      .card-block
+        .text-center
+          = fa_icon "trophy", class: 'card-fa awk-ap'
+        %h3.card-title.text-center Top Awakening AP
+        %p.card-text 
+          Congratulations to
+          = @top_awk_ap.name
+          for having the most Awakening AP in the game with
+          %b
+            = @top_awk_ap.ap
+          Ap
+ 
+
+  .col-sm-4
+    .card
+      .card-block
+        .text-center
+          = fa_icon "trophy", class: 'card-fa'
+        %h3.card-title.text-center Top DP
+        %p.card-text
+          Congratulations to
+          = @top_awk_ap.name
+          for having the most DP in the game with
+          %b
+            = @top_awk_ap.ap
+          DP
