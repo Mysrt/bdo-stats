@@ -19,6 +19,96 @@ class User < ApplicationRecord
 
   scope :accepted, -> { where(guild_memberships: {accepted: true}) }
 
+  def self.calculate_top_dp
+    sql = <<-SQL 
+    SELECT * FROM (
+SELECT
+  users.*,
+  rank() OVER(ORDER BY users.dp DESC) AS player_rank
+  FROM USERS
+  WHERE users.dp IS NOT NULL
+  AND users.dp < 450
+  AND users.dp > 0
+) AS rankings
+WHERE player_rank = 1
+SQL
+    rank = User.find_by_sql(sql).first 
+    User.find(rank["id"])
+  end
+
+  def self.calculate_top_awk_ap
+    sql = <<-SQL 
+    SELECT * FROM (
+SELECT
+  users.*,
+  rank() OVER(ORDER BY users.awakening_ap DESC) AS player_rank
+  FROM USERS
+  WHERE users.awakening_ap IS NOT NULL
+  AND users.awakening_ap < 300
+  AND users.awakening_ap > 0
+) AS rankings
+WHERE player_rank = 1
+SQL
+    rank = User.find_by_sql(sql).first 
+    User.find(rank["id"])
+  end
+
+  def self.calculate_top_ap
+    sql = <<-SQL 
+    SELECT * FROM (
+SELECT
+  users.*,
+  rank() OVER(ORDER BY users.ap DESC) AS player_rank
+  FROM USERS
+  WHERE users.ap IS NOT NULL
+  AND users.ap < 300
+  AND users.ap > 0
+) AS rankings
+WHERE player_rank = 1
+SQL
+    rank = User.find_by_sql(sql).first 
+    User.find(rank["id"])
+  end
+
+  [:ap, :awakening_ap, :dp].each do |method_name|
+    define_method "get_user_#{method_name}_ranking" do
+      sql = <<-SQL 
+SELECT 
+  * 
+FROM (
+  SELECT
+    users.id,
+    rank() OVER(ORDER BY users.#{method_name.to_s} DESC) AS player_rank
+    FROM USERS
+    WHERE users.#{method_name.to_s} IS NOT NULL
+  ) AS rankings
+WHERE rankings.id = #{self.id}
+SQL
+      User.find_by_sql(sql).first.player_rank
+    end
+
+    define_method "close_#{method_name}" do
+      ranking = get_user_ap_ranking
+      sql = <<-SQL 
+  SELECT 
+    * 
+  FROM (
+    SELECT
+      users.*,
+      rank() OVER(ORDER BY users.#{method_name.to_s} DESC) AS player_rank
+      FROM USERS
+      WHERE users.#{method_name.to_s} IS NOT NULL
+      AND users.#{method_name.to_s} < 450
+      AND users.#{method_name.to_s} > 0
+    ) AS rankings
+  WHERE rankings.player_rank < #{ranking + 5}
+  AND rankings.player_rank > #{ranking - 5}
+  SQL
+
+      User.find_by_sql(sql)
+    end
+  end
+
   def guild
     @guild ||= guilds.first
   end
@@ -80,55 +170,4 @@ SQL
     User.find_by_sql(sql).first 
   end
 
-  def self.calculate_top_dp
-    sql = <<-SQL 
-    SELECT * FROM (
-SELECT
-  users.*,
-  rank() OVER(ORDER BY users.dp DESC) AS player_rank
-  FROM USERS
-  WHERE users.dp IS NOT NULL
-  AND users.dp < 450
-  AND users.dp > 0
-) AS rankings
-WHERE player_rank = 1
-SQL
-    rank = User.find_by_sql(sql).first 
-    User.find(rank["id"])
-  end
-
-  def self.calculate_top_awk_ap
-    sql = <<-SQL 
-    SELECT * FROM (
-SELECT
-  users.*,
-  rank() OVER(ORDER BY users.awakening_ap DESC) AS player_rank
-  FROM USERS
-  WHERE users.awakening_ap IS NOT NULL
-  AND users.awakening_ap < 300
-  AND users.awakening_ap > 0
-) AS rankings
-WHERE player_rank = 1
-SQL
-    rank = User.find_by_sql(sql).first 
-    User.find(rank["id"])
-  end
-
-  def self.calculate_top_ap
-    sql = <<-SQL 
-    SELECT * FROM (
-SELECT
-  users.*,
-  rank() OVER(ORDER BY users.ap DESC) AS player_rank
-  FROM USERS
-  WHERE users.ap IS NOT NULL
-  AND users.ap < 300
-  AND users.ap > 0
-) AS rankings
-WHERE player_rank = 1
-SQL
-    rank = User.find_by_sql(sql).first 
-    User.find(rank["id"])
- 
-  end
 end
