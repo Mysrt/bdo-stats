@@ -17,7 +17,10 @@
 
             .media-body
               %h1.inline.mt-0
-                = @user.family_name
+                - if @user.gear_screenshot_content_type
+                  = link_to @user.family_name, @user.gear_screenshot.url(:original), class: 'image-popout'
+                - else
+                  = @user.family_name
               %small.inline
                 = @user.name
                 %small.inline
@@ -98,8 +101,6 @@
              
     - else
       Finish your profile to see your ranking information
-    - if @user.gear_screenshot_content_type
       .row.gear-screenshot
         .col-md-6.col-md-offset-3
-          = image_tag @user.gear_screenshot(:large)
 
