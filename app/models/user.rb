@@ -28,7 +28,7 @@ SELECT
   FROM USERS
   WHERE users.dp IS NOT NULL
   AND users.dp <= 450
-  AND users.dp >= 0
+  AND users.dp > 0
 ) AS rankings
 WHERE player_rank = 1
 SQL
@@ -45,7 +45,7 @@ SELECT
   FROM USERS
   WHERE users.awakening_ap IS NOT NULL
   AND users.awakening_ap <= 300
-  AND users.awakening_ap >= 0
+  AND users.awakening_ap > 0
 ) AS rankings
 WHERE player_rank = 1
 SQL
@@ -62,7 +62,7 @@ SELECT
   FROM USERS
   WHERE users.ap IS NOT NULL
   AND users.ap <= 300
-  AND users.ap >= 0
+  AND users.ap > 0
 ) AS rankings
 WHERE player_rank = 1
 SQL
@@ -88,7 +88,7 @@ SQL
     end
 
     define_method "close_#{method_name}" do
-      ranking = get_user_ap_ranking
+      ranking = self.send "get_user_#{method_name}_ranking".to_sym
       lower_bound = ranking - 5
       sql = <<-SQL 
   SELECT 
@@ -100,7 +100,7 @@ SQL
       FROM USERS
       WHERE users.#{method_name.to_s} IS NOT NULL
       AND users.#{method_name.to_s} <= 450
-      AND users.#{method_name.to_s} >= 0
+      AND users.#{method_name.to_s} > 0
     ) AS rankings
   WHERE rankings.player_rank <= #{ranking + 5}
   AND rankings.player_rank >= #{lower_bound.negative? ? 0 : lower_bound}
