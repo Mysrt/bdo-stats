@@ -29,6 +29,7 @@ SELECT
   WHERE users.dp IS NOT NULL
   AND users.dp <= 450
   AND users.dp > 0
+  AND users.verified = 't'
 ) AS rankings
 WHERE player_rank = 1
 SQL
@@ -46,6 +47,7 @@ SELECT
   WHERE users.awakening_ap IS NOT NULL
   AND users.awakening_ap <= 300
   AND users.awakening_ap > 0
+  AND users.verified = 't'
 ) AS rankings
 WHERE player_rank = 1
 SQL
@@ -63,6 +65,7 @@ SELECT
   WHERE users.ap IS NOT NULL
   AND users.ap <= 300
   AND users.ap > 0
+  AND users.verified = 't'
 ) AS rankings
 WHERE player_rank = 1
 SQL
@@ -81,16 +84,18 @@ FROM (
     rank() OVER(ORDER BY users.#{method_name.to_s} DESC) AS player_rank
     FROM USERS
     WHERE users.#{method_name.to_s} IS NOT NULL
+    AND users.verified = 't'
   ) AS rankings
 WHERE rankings.id = #{self.id}
 SQL
-      User.find_by_sql(sql).first.player_rank
+      User.find_by_sql(sql).first.try(:player_rank)
     end
 
     define_method "close_#{method_name}" do
       ranking = self.send "get_user_#{method_name}_ranking".to_sym
-      lower_bound = ranking - 5
-      sql = <<-SQL 
+      if ranking
+        lower_bound = ranking - 5
+        sql = <<-SQL 
   SELECT 
     * 
   FROM (
@@ -101,12 +106,16 @@ SQL
       WHERE users.#{method_name.to_s} IS NOT NULL
       AND users.#{method_name.to_s} <= 450
       AND users.#{method_name.to_s} > 0
+      AND users.verified = 't'
     ) AS rankings
   WHERE rankings.player_rank <= #{ranking + 5}
   AND rankings.player_rank >= #{lower_bound.negative? ? 0 : lower_bound}
   SQL
 
-      User.find_by_sql(sql)
+  User.find_by_sql(sql)
+      else
+        []
+      end
     end
   end
 
@@ -164,11 +173,12 @@ SELECT
   rank() OVER(ORDER BY users.awakening_ap DESC) AS player_rank
   FROM USERS
   WHERE users.awakening_ap IS NOT NULL
+  AND users.verified = 't'
   AND users.ap IS NOT NULL
 ) AS rankings
 WHERE rankings.id = #{self.id}
 SQL
-    User.find_by_sql(sql).first 
+    @percentile_calculations ||= User.find_by_sql(sql).first 
   end
 
 end

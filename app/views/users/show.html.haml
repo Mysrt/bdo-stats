@@ -68,17 +68,23 @@
           .text-center
             AP Percentile
             %h1
-              Top
-              = @user.percentile_calculations.ap_percentile
-              \%
+              - if @user.percentile_calculations
+                Top
+                = @user.percentile_calculations.ap_percentile
+                \%
+              - else
+                Unverified
 
         .col-md-4
           .text-center
             Awakened AP Percentile
             %h1
-              Top
-              = @user.percentile_calculations.awakening_ap_percentile
-              \%
+              - if @user.percentile_calculations
+                Top
+                = @user.percentile_calculations.awakening_ap_percentile
+                \%
+              - else
+                Unverified
 
       .row
         - { 'ap' => @close_aps, 'awakening_ap' => @close_awakening_aps, 'dp' => @close_dps }.each do |type, collection|
