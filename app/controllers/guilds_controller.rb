@@ -51,6 +51,8 @@ class GuildsController < ApplicationController
       return
     end
 
+    @membership = @guild.membership_for(current_user)
+
     unless @membership
       flash[:danger] = "You are not a member of this guild and cannot view its stats"
       redirect_to current_user || root_path
@@ -60,7 +62,6 @@ class GuildsController < ApplicationController
     @memberships = @guild.guild_memberships.where(guild_memberships: {accepted: true}).preload(:user)
     @members = @guild.users.where(guild_memberships: {accepted: true})
     @unaccepted_members = @guild.guild_memberships.where(accepted: false).order("created_at DESC")
-    @membership = @guild.membership_for(current_user)
     @invite_link = "#{request.base_url}/inv/#{@membership.invite_hash}" if @membership
   end
 
