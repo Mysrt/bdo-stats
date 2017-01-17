@@ -45,9 +45,15 @@ class GuildsController < ApplicationController
 
   def show
     @guild = Guild.find_by_id(params.permit(:id)[:id])
-    unless @guild
+    unless @guild 
       flash[:danger] = "Guild does not exist"
       redirect_to current_user
+      return
+    end
+
+    unless @membership
+      flash[:danger] = "You are not a member of this guild and cannot view its stats"
+      redirect_to current_user || root_path
       return
     end
 
