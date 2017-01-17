@@ -10,33 +10,36 @@
     
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
-    %nav.navbar.navbar-custom
-      .container-fluid
-        .navbar-header
-          - if user_signed_in?
-            = link_to "BDO STATS", user_path(current_user), id: 'main-link'
-          - else
-            BDO Stats
-        .pull-right
-          %small
+    .wrapper
+      %nav.navbar.navbar-custom
+        .container-fluid
+          .navbar-header
             - if user_signed_in?
-              = link_to 'Logout', destroy_user_session_path, :method => :delete, class: 'login-links'
+              = link_to "BDO STATS", user_path(current_user), id: 'main-link'
             - else
-              = link_to 'Login', new_user_session_path, class: 'login-links'
-    .container
-      .row
-        .col-md-6.col-md-offset-3
-        - flash.each do |key, value|
-          .div{ class: "alert flash alert-#{key} bg-#{key}"}
-            %button(type="button" class="close" data-dismiss="alert" aria-label="Close")
-              %span(aria-hidden="true")
-                &times;
-            = value
+              BDO Stats
+          .pull-right
+            %small
+              - if user_signed_in?
+                = link_to 'Logout', destroy_user_session_path, :method => :delete, class: 'login-links'
+              - else
+                = link_to 'Login', new_user_session_path, class: 'login-links'
+      .container
+        .row
+          .col-md-6.col-md-offset-3
+          - flash.each do |key, value|
+            .div{ class: "alert flash alert-#{key} bg-#{key}"}
+              %button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+                %span(aria-hidden="true")
+                  &times;
+              = value
 
-      = yield
-    %footer.footer
-      .container.navbar-custom
-        %h5
-          BDO STATS
-          %p
-            %small The BDO stat tracking tool
+        = yield
+
+    %footer#footer
+      %nav.navbar.navbar-custom
+        .container
+          %h5
+            BDO STATS
+            %p
+              %small The BDO stat tracking tool

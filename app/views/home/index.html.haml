@@ -5,6 +5,14 @@
       BDO STATS
     .bdo-header#header-help-text
       Guild stat tracking tool for Black Desert Online
+  .row
+    .col-md-4.col-md-offset-4.text-center
+      %span.action-box
+        = link_to 'Login', new_user_session_path, class: 'btn'
+
+      \- or -
+      %span.action-box
+        = link_to 'Sign Up', new_user_registration_path, class: 'btn'
 
 .row
   .col-sm-6
