@@ -11,15 +11,25 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
     .wrapper
-      %nav.navbar.navbar-custom
-        .container-fluid
-          .navbar-header
-            - if user_signed_in?
-              = link_to "BDO STATS", user_path(current_user), id: 'main-link'
-            - else
-              BDO Stats
-          .pull-right
-            %small
+      %nav.navbar.navbar-light
+        #navbarResponsive
+          - if user_signed_in?
+            = link_to "BDO STATS", user_path(current_user), id: 'main-link', class: 'navbar-brand'
+          - else
+            BDO Stats
+
+          %ul.nav.navbar-nav
+            - if current_user
+              %li.nav-item
+                = link_to "My Stats", current_user
+
+            - if current_user.try(:guild)
+              %li.nav-item
+                = link_to current_user.guild.name, current_user.guild
+
+
+          %ul.nav.navbar-right
+            %li.nav-item
               - if user_signed_in?
                 = link_to 'Logout', destroy_user_session_path, :method => :delete, class: 'login-links'
               - else
