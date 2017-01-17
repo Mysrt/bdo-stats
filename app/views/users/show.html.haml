@@ -92,7 +92,7 @@
                     Ranking
               %tbody
                 - collection.each do |user|
-                  %tr
+                  %tr(class="#{(current_user.id == user.id) ? 'my-stats' : ''}")
                     %td
                       = user.player_rank
                     %td
