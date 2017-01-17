@@ -17,6 +17,8 @@
             = link_to "BDO STATS", user_path(current_user), id: 'main-link', class: 'navbar-brand'
           - else
             = link_to "BDO STATS", root_path, id: 'main-link', class: 'navbar-brand'
+          %span.navbar-text
+            beta
 
           %ul.nav.navbar-nav
             - if current_user
@@ -29,7 +31,7 @@
 
 
           %ul.nav.navbar-right
-            %li.nav-item
+            %li.nav-item.nav-logout
               - if user_signed_in?
                 = link_to 'Logout', destroy_user_session_path, :method => :delete, class: 'login-links'
               - else
