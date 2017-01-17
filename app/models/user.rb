@@ -88,6 +88,7 @@ SELECT
   rank() OVER(ORDER BY users.dp DESC) AS player_rank
   FROM USERS
   WHERE users.dp IS NOT NULL
+  AND users.dp < 450
   AND users.dp > 0
 ) AS rankings
 WHERE player_rank = 1
@@ -104,6 +105,7 @@ SELECT
   rank() OVER(ORDER BY users.awakening_ap DESC) AS player_rank
   FROM USERS
   WHERE users.awakening_ap IS NOT NULL
+  AND users.awakening_ap < 300
   AND users.awakening_ap > 0
 ) AS rankings
 WHERE player_rank = 1
@@ -120,6 +122,7 @@ SELECT
   rank() OVER(ORDER BY users.ap DESC) AS player_rank
   FROM USERS
   WHERE users.ap IS NOT NULL
+  AND users.ap < 300
   AND users.ap > 0
 ) AS rankings
 WHERE player_rank = 1
