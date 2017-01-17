@@ -6,9 +6,11 @@ class UsersController < ApplicationController
   def show
     @guilds = current_user.guilds
     @user = User.find_by_id(params[:user]) || current_user
-    @close_aps = current_user.close_ap
-    @close_awakening_aps = current_user.close_awakening_ap
-    @close_dps = current_user.close_dp
+    if @user.complete?
+      @close_aps = current_user.close_ap
+      @close_awakening_aps = current_user.close_awakening_ap
+      @close_dps = current_user.close_dp
+    end
 
     unless @user.complete?
       flash[:danger] = "Please finish filling out your information to continue.  Necessary fields are:  Name, Family Name, Ap, Awakening Ap, and Dp"
