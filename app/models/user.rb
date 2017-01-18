@@ -19,67 +19,32 @@ class User < ApplicationRecord
 
   scope :accepted, -> { where(guild_memberships: {accepted: true}) }
 
-  def self.calculate_top_dp
-    sql = <<-SQL 
-    SELECT * FROM (
-SELECT
-  users.*,
-  rank() OVER(ORDER BY users.dp DESC) AS player_rank
-  FROM USERS
-  WHERE users.dp IS NOT NULL
-  AND users.dp <= 450
-  AND users.dp > 0
-  AND users.verified = 't'
-  AND users.private_profile = 'f'
-  AND users.gear_screenshot_content_type IS NOT NULL
-) AS rankings
-WHERE player_rank = 1
-SQL
-    rank = User.find_by_sql(sql).first 
-    User.find(rank["id"])
-  end
-
   def self.calculate_top_awk_ap
-    sql = <<-SQL 
-    SELECT * FROM (
-SELECT
-  users.*,
-  rank() OVER(ORDER BY users.awakening_ap DESC) AS player_rank
-  FROM USERS
-  WHERE users.awakening_ap IS NOT NULL
-  AND users.awakening_ap <= 300
-  AND users.awakening_ap > 0
-  AND users.verified = 't'
-  AND users.private_profile = 'f'
-  AND users.gear_screenshot_content_type IS NOT NULL
-) AS rankings
-WHERE player_rank = 1
-SQL
-    rank = User.find_by_sql(sql).first 
-    User.find(rank["id"])
-  end
-
-  def self.calculate_top_ap
-    sql = <<-SQL 
-    SELECT * FROM (
-SELECT
-  users.*,
-  rank() OVER(ORDER BY users.ap DESC) AS player_rank
-  FROM USERS
-  WHERE users.ap IS NOT NULL
-  AND users.ap <= 300
-  AND users.ap > 0
-  AND users.verified = 't'
-  AND users.private_profile = 'f'
-  AND users.gear_screenshot_content_type IS NOT NULL
-) AS rankings
-WHERE player_rank = 1
-SQL
-    rank = User.find_by_sql(sql).first 
-    User.find(rank["id"])
+    User.calculate_top_awakening_ap
   end
 
   [:ap, :awakening_ap, :dp].each do |method_name|
+    define_singleton_method "calculate_top_#{method_name.to_s}" do
+      sql = <<-SQL 
+SELECT * FROM (
+  SELECT
+    users.*,
+    rank() OVER(ORDER BY users.#{method_name.to_s} DESC) AS player_rank
+    FROM USERS
+    WHERE users.dp IS NOT NULL
+    AND users.#{method_name.to_s} <= 450
+    AND users.#{method_name.to_s} > 0
+    AND users.verified = 't'
+    AND users.private_profile = 'f'
+    AND users.gear_screenshot_content_type IS NOT NULL
+) AS rankings
+WHERE player_rank = 1
+SQL
+      rank = User.find_by_sql(sql).first 
+      User.find(rank["id"])
+    end
+
+
     define_method "get_user_#{method_name}_ranking" do
       sql = <<-SQL 
 SELECT 
