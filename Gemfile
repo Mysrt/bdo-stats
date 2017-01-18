@@ -31,6 +31,8 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'devise'
+
+gem 'letsencrypt-plugin'
 gem 'haml'
 gem 'font-awesome-rails'
 gem 'paperclip'
