@@ -32,7 +32,6 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'devise'
 
-gem 'letsencrypt-plugin'
 gem 'haml'
 gem 'font-awesome-rails'
 gem 'paperclip'
