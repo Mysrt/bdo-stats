@@ -56,6 +56,11 @@
       .col-sm-10
         = f.text_field :level, class: 'form-control', placeholder: 'Level'
 
+  .row
+    .form-group
+      = f.label :private_profile, "Hide profile from public stat tracking", class: 'col-sm-2 control-label'
+      = f.check_box :private_profile
+
   .form-group
     = f.label :gear_screenshot, class: 'col-sm-2 control-label'
 
@@ -73,7 +78,6 @@
       Upload Avatar
 
     %span#upload-avatar-file-info.label.label-info
-
 
 
   .row

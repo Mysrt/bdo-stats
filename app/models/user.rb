@@ -30,6 +30,7 @@ SELECT
   AND users.dp <= 450
   AND users.dp > 0
   AND users.verified = 't'
+  AND users.private_profile = 'f'
 ) AS rankings
 WHERE player_rank = 1
 SQL
@@ -48,6 +49,7 @@ SELECT
   AND users.awakening_ap <= 300
   AND users.awakening_ap > 0
   AND users.verified = 't'
+  AND users.private_profile = 'f'
 ) AS rankings
 WHERE player_rank = 1
 SQL
@@ -66,6 +68,7 @@ SELECT
   AND users.ap <= 300
   AND users.ap > 0
   AND users.verified = 't'
+  AND users.private_profile = 'f'
 ) AS rankings
 WHERE player_rank = 1
 SQL
@@ -85,6 +88,7 @@ FROM (
     FROM USERS
     WHERE users.#{method_name.to_s} IS NOT NULL
     AND users.verified = 't'
+    AND users.private_profile = 'f'
   ) AS rankings
 WHERE rankings.id = #{self.id}
 SQL
@@ -107,12 +111,13 @@ SQL
       AND users.#{method_name.to_s} <= 450
       AND users.#{method_name.to_s} > 0
       AND users.verified = 't'
+      AND users.private_profile = 'f'
     ) AS rankings
   WHERE rankings.player_rank <= #{ranking + 5}
   AND rankings.player_rank >= #{lower_bound.negative? ? 0 : lower_bound}
   SQL
 
-  User.find_by_sql(sql)
+        User.find_by_sql(sql)
       else
         []
       end

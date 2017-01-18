@@ -1,4 +1,4 @@
-- if (!@membership.try(:royalty?) && @membership.try(:hide_from_members?)) || !@membership.accepted?
+- if (!@membership.try(:royalty?) && @guild.try(:hide_from_members?)) || !@membership.accepted?
   .row
     .col-md-2
     .col-md-8
@@ -62,7 +62,7 @@
             %td
               - unless membership.officer? || membership.admin?
                 = button_to 'P', {controller: 'guild_memberships', action: 'update', promote: true, id: membership.id}, class: 'inline btn btn-primary btn-sm', method: 'patch', data: {confirm: "Are you sure you want to promote #{member.name}.  This will allow him to kick and promote other members, as well as see all other members stats"}
-              - unless member.id == current_user.id
+              - unless (member.id == current_user.id) || membership.admin?
                 = button_to 'K', {controller: 'guild_memberships', action: 'update', kick: true, id: membership.id}, class: 'inline btn btn-danger btn-sm', method: 'patch', data: {confirm: "Are you sure you want to kick #{member.name}"}
 
 

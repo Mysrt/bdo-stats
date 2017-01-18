@@ -64,7 +64,7 @@
       #members.active.tab-pane{"role" => "tabpanel"}
         = render partial: 'members_table'
 
-      - if @membership.try(:admin?)
+      - if @membership.try(:royalty?)
         #invites.tab-pane{"role" => "tabpanel"}
           = render partial: 'join_requests'
 
