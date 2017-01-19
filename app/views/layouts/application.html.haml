@@ -36,21 +36,22 @@
                 = link_to current_user.guild.name, current_user.guild
 
           %ul.nav.navbar-right
-            - if Alert.any?
-              %li.nav-item.col-md-8
-                .alert.alert-danger.text-center
-                  %button(type="button" class="close" data-dismiss="alert" aria-label="Close")
-                    %span(aria-hidden="true")
-                      &times;
-     
-                  = Alert.first.body
-
 
             %li.nav-item.nav-logout
               - if user_signed_in?
                 = link_to 'Logout', destroy_user_session_path, :method => :delete, class: 'login-links'
               - else
                 = link_to 'Login', new_user_session_path, class: 'login-links'
+        - if Alert.any?
+          .col-md-8
+            .alert.alert-danger.text-center
+              %button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+                %span(aria-hidden="true")
+                  &times;
+ 
+              = Alert.first.body
+
+
       .container
         .row
           .col-md-6.col-md-offset-3
