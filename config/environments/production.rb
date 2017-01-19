@@ -42,7 +42,9 @@ Rails.application.configure do
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
 
-  config.middleware.insert_before ActionDispatch::SSL, Letsencrypt::Middleware
+  config.middleware.use Letsencrypt::Middleware
+  
+  #config.middleware.insert_before ActionDispatch::SSL, Letsencrypt::Middleware
   #config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
