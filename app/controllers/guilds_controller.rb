@@ -62,7 +62,7 @@ class GuildsController < ApplicationController
     @memberships = @guild.guild_memberships.where(guild_memberships: {accepted: true}).preload(:user)
     @members = @guild.users.where(guild_memberships: {accepted: true})
     @unaccepted_members = @guild.guild_memberships.where(accepted: false).order("created_at DESC")
-    @invite_link = "#{request.base_url}/inv/#{@membership.invite_hash}" if @membership
+    @invite_link = "#{request.base_url.gsub("www\.", '')}/inv/#{@membership.invite_hash}" if @membership
   end
 
   def create
