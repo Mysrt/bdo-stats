@@ -10,9 +10,9 @@ class GuildMembershipsController < ApplicationController
     end
 
     @guild = @guild_membership.guild
-    unless @guild.membership_for(current_user)
-      @new_membership = @guild.guild_memberships.create!(user: current_user, invitor_id: @guild_membership.user_id)
-    end
+    #unless @guild.membership_for(current_user)
+      @new_membership = @guild.guild_memberships.create(user: current_user, invitor_id: @guild_membership.user_id)
+    #end
 
     respond_to do |format|
       if @new_membership
