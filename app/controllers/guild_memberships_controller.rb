@@ -23,7 +23,7 @@ class GuildMembershipsController < ApplicationController
 
       else 
         format.html {
-          flash[:danger] = "You cannot join this guild, #{@new_membership.errors.full_messages.join(', ')}"
+          flash[:danger] = "You cannot join this guild, #{@new_membership.errors.full_messages.join(', ') if @new_membership}"
           redirect_to @guild || current_user
         }
       end
