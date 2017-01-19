@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170119042745) do
+ActiveRecord::Schema.define(version: 20170119044826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(version: 20170119042745) do
     t.datetime "avatar_updated_at"
     t.boolean  "verified",                     default: true
     t.boolean  "private_profile",              default: false
+    t.boolean  "red_nose"
     t.index ["private_profile"], name: "index_users_on_private_profile", using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["verified"], name: "index_users_on_verified", using: :btree

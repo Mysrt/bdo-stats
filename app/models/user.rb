@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :guild_memberships
   has_many :guilds, through: :guild_memberships
 
-  BOSS_GEAR = ["bhegs", "muskan", "giath", "tree", "zaka", "dandy", "kutum", "nouver"]
+  BOSS_GEAR = ["bhegs", "muskan", "giath", "tree", "red_nose", "zaka", "dandy", "kutum", "nouver"]
 
   has_attached_file :gear_screenshot, :styles => {:large => "900x900#"}
   validates_attachment :gear_screenshot, content_type: { content_type:     ["image/jpg", "image/jpeg", "image/png"] }

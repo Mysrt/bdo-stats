@@ -81,6 +81,11 @@
 
 
   .row
+    .col-md-10.col-md-offset-2
+      %h4 
+        Please select which pieces of boss gear you have equipped for those stats
+        %p
+          %small e.g. You don't have both kutum and nouver together, (same with tree/red nose)
     .form-group
       - User::BOSS_GEAR.each do |item_name|
         .col-md-5.col-md-offset-2
