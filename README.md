@@ -1,24 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a fairly basic rails application.  It is written using Rails 5.0 and Ruby 2.2.2
 
-Things you may want to cover:
+To get started, create a new postgresql database and update the
+sample database.yml.  note that the sample is not a postgres yml and
+you'll have to change that
 
-* Ruby version
+To get started just pull down the application and run
 
-* System dependencies
+    bundle exec rake db:migrate
 
-* Configuration
+    bundle exec rails s
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+And you should be good to go with a blank database at localhost:3000

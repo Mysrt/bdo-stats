@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :guilds
+  resources :changelogs
   resources :guild_memberships do
     member do
       patch :accept_invite

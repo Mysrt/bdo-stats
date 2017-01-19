@@ -57,7 +57,20 @@
     %footer#footer
       %nav.navbar.navbar-custom
         .container
-          %h5
-            BDO STATS
-            %p
-              %small The BDO stat tracking tool
+          .row
+            .col-md-6
+              %h5
+                BDO STATS
+                %p
+                  %small The BDO stat tracking tool
+          .row
+            .col-md-1
+              %small
+                = link_to 'Changelog', changelogs_path
+
+            -#.col-md-1
+            -#  %small
+            -#    = link_to "Contribute", "https://github.com/Mysrt/bdo-stats"
+
+
+

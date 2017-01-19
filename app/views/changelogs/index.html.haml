@@ -1,0 +1,11 @@
+%h1 BDOSTATS Changelog
+
+- @changelogs.each do |changelog|
+  %h3
+    = changelog.name
+    %small
+      = changelog.created_at.to_s(:long)
+
+
+  %p 
+    = changelog.body
