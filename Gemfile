@@ -38,6 +38,10 @@ gem 'paperclip'
 gem 'aws-sdk', '< 2.0'
 gem 'magnific-popup-rails'
 
+
+gem 'platform-api', github: 'jalada/platform-api', branch: 'master'
+gem 'letsencrypt-rails-heroku', group: 'production'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
