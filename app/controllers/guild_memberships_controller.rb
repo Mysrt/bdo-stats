@@ -19,12 +19,14 @@ class GuildMembershipsController < ApplicationController
         format.html {
           flash[:success] = "Welcome to #{@guild.name}"
           redirect_to @guild
+          return
         }
 
       else 
         format.html {
           flash[:danger] = "You cannot join this guild, #{@new_membership.errors.full_messages.join(', ') if @new_membership}"
           redirect_to current_user
+          return
         }
       end
     end
