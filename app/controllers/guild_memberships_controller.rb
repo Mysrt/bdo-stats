@@ -1,4 +1,5 @@
 class GuildMembershipsController < ApplicationController
+  before_filter :authenticate_user!
 
   def create
     @guild_membership = GuildMembership.find_by_invite_hash(params.permit(:invite_hash)[:invite_hash])
