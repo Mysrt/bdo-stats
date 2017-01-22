@@ -1,0 +1,17 @@
+%h1 Change Password
+ 
+= form_for @user, html: {class: 'form-horizontal'} do |f|
+
+  .form-group
+    = f.label :password, class: 'control-label col-sm-2'
+    .col-sm-10
+      = f.password_field :password, class: 'form-control'
+
+  .form-group
+    = f.label :password_confirmation, class: 'control-label col-sm-2'
+    .col-sm-10
+      = f.password_field :password_confirmation, class: 'form-control'
+
+  .row
+    .col-sm-10.col-sm-offset-2
+      = f.submit "Save", class: 'btn btn-primary btn-lg'

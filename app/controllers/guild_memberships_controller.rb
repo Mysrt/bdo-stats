@@ -11,9 +11,7 @@ class GuildMembershipsController < ApplicationController
     end
 
     @guild = @guild_membership.guild
-    #unless @guild.membership_for(current_user)
-      @new_membership = @guild.guild_memberships.create(user: current_user, invitor_id: @guild_membership.user_id)
-    #end
+    @new_membership = @guild.guild_memberships.create(user: current_user, invitor_id: @guild_membership.user_id)
 
     respond_to do |format|
       if @new_membership
@@ -56,6 +54,28 @@ class GuildMembershipsController < ApplicationController
       format.html {
         flash[:success] = message
         redirect_to @guild
+        return
+      }
+    end
+  end
+
+  def destroy
+    @guild_membership = GuildMembership.find(params[:id])
+    @guild = @guild_membership.guild
+
+    @current_user_membership = @guild.membership_for(current_user)
+    unless @current_user_membership.try(:royalty?) || (@guild_membership.user_id == current_user.id)
+      flash[:error] = "You don't have permission to do this action"
+      redirect_to root_path
+      return
+    end
+
+    @guild_membership.destroy
+
+    respond_to do |format|
+      format.html {
+        flash[:success] = "You have left #{@guild.name}"
+        redirect_to current_user
         return
       }
     end

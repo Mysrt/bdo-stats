@@ -7,10 +7,14 @@
         = @guild.name
 
         %small.inline
+          %button{type: 'button', class: 'btn btn-sm', "data-toggle" => 'modal', "data-target" => '#invite-link-modal'}
+            Invite Link
+
+          = button_to 'Leave Guild', @membership, class: 'inline btn btn-danger btn-sm', method: 'delete', data: {confirm: "Are you sure you want to leave #{@guild.name}?"}
+
           - if @membership.try(:royalty?)
             = link_to "Edit", edit_guild_path(@guild), class: 'fa fa-pencil'
-          %button{type: 'button', class: 'btn btn-small', "data-toggle" => 'modal', "data-target" => '#invite-link-modal'}
-            Invite Link
+
 
 #guild-stats
   - unless @membership.accepted?

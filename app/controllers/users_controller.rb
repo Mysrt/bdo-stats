@@ -23,15 +23,26 @@ class UsersController < ApplicationController
     @user = current_user
   end
 
+  def edit_user_settings
+    @user = current_user
+  end
+
   def update
     params.permit!
 
-    current_user.update_attributes(params[:user])
     respond_to do |format|
-      format.html {
-        flash[:success] = 'Stats Updated'
-        redirect_to current_user
-      }
+      if current_user.update_attributes(params[:user])
+        format.html {
+          flash[:success] = 'Stats Updated'
+          sign_in(current_user, :bypass => true)
+          redirect_to current_user
+        }
+      else
+        format.html {
+          flash[:danger] = "Unable to due to the following errors::  #{current_user.errors.full_messages.join(', ')}"
+          redirect_to :back
+        }
+      end
     end
   end
 

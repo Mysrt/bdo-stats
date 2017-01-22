@@ -37,11 +37,16 @@
 
           %ul.nav.navbar-right
 
-            %li.nav-item.nav-logout
-              - if user_signed_in?
-                = link_to 'Logout', destroy_user_session_path, :method => :delete, class: 'login-links'
-              - else
-                = link_to 'Login', new_user_session_path, class: 'login-links'
+            %li.nav-item.dropdown.nav-logout
+              %a#navbarDropdownMenuLink.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "http://example.com"}
+                = fa_icon("gear")
+              .dropdown-menu{"aria-labelledby" => "navbarDropdownMenuLink"}
+                - if user_signed_in?
+                  = link_to 'Change Password', edit_user_settings_user_path, class: 'login-links dropdown-item'
+                  = link_to 'Logout', destroy_user_session_path, :method => :delete, class: 'login-links dropdown-item'
+                - else
+                  = link_to 'Login', new_user_session_path, class: 'login-links dropdown-item'
+
         - if Alert.any?
           .col-md-8
             .alert.alert-danger.text-center
