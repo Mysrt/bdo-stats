@@ -42,7 +42,7 @@
                 = fa_icon("gear")
               .dropdown-menu{"aria-labelledby" => "navbarDropdownMenuLink"}
                 - if user_signed_in?
-                  = link_to 'Change Password', edit_user_settings_user_path, class: 'login-links dropdown-item'
+                  = link_to 'Change Password', edit_user_settings_user_path(current_user), class: 'login-links dropdown-item'
                   = link_to 'Logout', destroy_user_session_path, :method => :delete, class: 'login-links dropdown-item'
                 - else
                   = link_to 'Login', new_user_session_path, class: 'login-links dropdown-item'

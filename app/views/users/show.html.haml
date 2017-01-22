@@ -1,9 +1,10 @@
 .container
   - unless @user.family_name
-    %p
-      Please finish updating your character profile to continue
+    .text-center
+      %p
+        Please finish updating your character profile to continue
 
-    = link_to 'Edit Stats', edit_user_path(@user) if @user == current_user
+      = link_to 'Edit Stats', edit_user_path(@user) if @user == current_user
   - else
     .row
       .col-md-12
