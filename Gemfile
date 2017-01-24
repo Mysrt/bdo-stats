@@ -37,6 +37,7 @@ gem 'font-awesome-rails'
 gem 'paperclip'
 gem 'aws-sdk', '< 2.0'
 gem 'magnific-popup-rails'
+gem 'react-rails'
 
 
 gem 'platform-api', github: 'jalada/platform-api', branch: 'master'

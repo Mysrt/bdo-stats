@@ -15,4 +15,7 @@
 //= require turbolinks
 //= require magnific-popup
 //= require bootstrap
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .
