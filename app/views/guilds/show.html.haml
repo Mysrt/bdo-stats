@@ -56,6 +56,10 @@
         %li.active{"role" => "presentation"}
           %a{ "href" => "#members", "id" => "home-tab", "role" => "tab", "data-toggle" =>  "tab", "aria-controls" => "members", "aria-expanded" => "true" }
             Guild Members
+            %span.badge.badge-pill
+              = @memberships.count
+
+
         - if @membership.try(:royalty?)
           %li{"role" => "presentation"}
             %a{ "href" => "#invites", "id" => "invites-tab", "role" => "tab", "data-toggle" =>  "tab", "aria-controls" => "invites", "aria-expanded" => "true" }
