@@ -13,3 +13,6 @@ To get started just pull down the application and run
     bundle exec rails s
 
 And you should be good to go with a blank database at localhost:3000
+
+
+
